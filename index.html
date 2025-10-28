@@ -4,26 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title> منصة التفوقQM</title>
-  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght=300;400;600;700;800&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.plyr.io/3.7.2/plyr.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js"></script>
   <style>
-    /*
-     * الألوان الأساسية: أزرق فيسبوك
-     */
+    /* التعديل الأول: تغيير الألوان إلى الأزرق */
     :root {
-      --primary: #1877F2; /* أزرق فيسبوك */
-      --primary-dark: #0e64d2; 
-      --primary-light: #4295f5; 
-      --secondary: #4caf50;
-      --accent: #ff9800;
+      --primary: #007bff; /* Blue */
+      --primary-dark: #0056b3; /* Dark Blue */
+      --primary-light: #3399ff; /* Light Blue */
+      --secondary: #2196f3;
+      --accent: #4caf50;
       --warning: #ff9800;
       --error: #f44336;
       --success: #8bc34a;
 
-      --plyr-color-main: #1877F2; 
+      --plyr-color-main: #007bff; /* Blue */
       --bg-color: #0a0a0a;
       --bg-secondary: #121212;
       --text-color: #ffffff;
@@ -32,17 +30,17 @@
       --card-hover: #2a2a2a;
       --border-color: #333333;
       --shadow: 0 4px 20px rgba(0,0,0,0.3);
-      --shadow-hover: 0 8px 30px rgba(24,119,242,0.2); 
+      --shadow-hover: 0 8px 30px rgba(0,123,255,0.2); /* Blue Shadow */
 
-      --gradient-primary: linear-gradient(135deg, #1877F2 0%, #4295f5 100%); 
+      --gradient-primary: linear-gradient(135deg, #007bff 0%, #3399ff 100%); /* Blue Gradient */
       --gradient-card: linear-gradient(145deg, #1e1e1e 0%, #2a2a2a 100%);
       --gradient-bg: linear-gradient(180deg, #0a0a0a 0%, #121212 100%);
     }
 
     [data-theme="light"] {
-      --primary: #1877F2;
-      --primary-dark: #0e64d2;
-      --primary-light: #4295f5;
+      --primary: #007bff;
+      --primary-dark: #0056b3;
+      --primary-light: #3399ff;
       --bg-color: #f8f9fa;
       --bg-secondary: #ffffff;
       --text-color: #212529;
@@ -51,7 +49,7 @@
       --card-hover: #f8f9fa;
       --border-color: #e9ecef;
       --shadow: 0 4px 20px rgba(0,0,0,0.1);
-      --shadow-hover: 0 8px 30px rgba(24,119,242,0.15); 
+      --shadow-hover: 0 8px 30px rgba(0,123,255,0.15); /* Blue Shadow */
 
       --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
       --gradient-bg: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
@@ -121,6 +119,11 @@
       100% { transform: scale(1); }
     }
 
+    @keyframes shimmer {
+      0% { background-position: -200px 0; }
+      100% { background-position: calc(200px + 100%) 0; }
+    }
+
     /* Header styles */
     header {
       background: var(--gradient-card);
@@ -143,8 +146,31 @@
       font-weight: 800;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      text-shadow: 0 2px 4px rgba(24,119,242,0.3);
+      text-shadow: 0 2px 4px rgba(0,123,255,0.3); /* Blue Shadow */
       position: relative;
+    }
+
+    .site-title:hover {
+      transform: scale(1.05);
+      animation: pulse 2s infinite;
+    }
+
+    .site-title::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: var(--gradient-primary);
+      border-radius: 8px;
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s;
+    }
+
+    .site-title:hover::before {
+      opacity: 0.1;
     }
 
     .nav-buttons {
@@ -170,9 +196,25 @@
       overflow: hidden;
     }
 
+    .nav-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      transition: left 0.3s;
+      z-index: -1;
+    }
+
     .nav-btn:hover {
       color: white;
       transform: translateY(-2px);
+    }
+
+    .nav-btn:hover::before {
+      left: 0;
     }
 
     .nav-btn.active {
@@ -201,7 +243,14 @@
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    #searchButton, #themeToggle, .copy-button {
+    #searchInput:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,123,255,0.1); /* Blue Shadow */
+      transform: translateY(-2px);
+    }
+
+    #searchButton, #themeToggle {
       background: var(--gradient-primary);
       color: white;
       border: none;
@@ -230,7 +279,7 @@
       justify-content: center;
     }
 
-    #searchButton:hover, #themeToggle:hover, .copy-button:hover {
+    #searchButton:hover, #themeToggle:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
@@ -267,6 +316,7 @@
       border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
+      /* تنسيق توسيط الصورة فقط */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -274,9 +324,25 @@
       min-height: 250px;
     }
 
+    .teacher-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
     .teacher-card:hover {
       transform: translateY(-10px) scale(1.02);
       box-shadow: var(--shadow-hover);
+    }
+
+    .teacher-card:hover::before {
+      transform: scaleX(1);
     }
 
     .teacher-img {
@@ -286,9 +352,9 @@
       object-fit: cover;
       border: 4px solid var(--primary);
       display: block;
-      margin: 0 auto; 
+      margin: 0 auto; /* تم تعديل الهامش لإزالة الهامش السفلي */
       transition: all 0.3s;
-      box-shadow: 0 8px 20px rgba(24,119,242,0.3);
+      box-shadow: 0 8px 20px rgba(0,123,255,0.3); /* Blue Shadow */
     }
 
     .teacher-card:hover .teacher-img {
@@ -296,11 +362,26 @@
       border-color: var(--primary-light);
     }
 
+    /* إخفاء الاسم والموضوع - التعديل المطلوب */
     .teacher-card .teacher-name,
     .teacher-card .teacher-subject {
       display: none !important;
     }
     
+    .teacher-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+    }
+
+    .teacher-subject {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
     /* Classes page */
     .classes-page {
       display: grid;
@@ -324,10 +405,20 @@
       border-radius: 50%;
       border: 4px solid var(--primary);
       object-fit: cover;
-      box-shadow: 0 8px 20px rgba(24,119,242,0.3);
+      box-shadow: 0 8px 20px rgba(0,123,255,0.3); /* Blue Shadow */
     }
 
-    .back-button {
+    .teacher-details h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .teacher-details p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    .back-button, .copy-button {
       background: var(--gradient-primary);
       color: white;
       border: none;
@@ -343,24 +434,123 @@
       box-shadow: var(--shadow);
     }
 
-    .back-button:hover {
+    .back-button:hover, .copy-button:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
 
-    /* ===== Video page Layout & Playlist ===== */
-    .video-content-grid {
+    .classes-list {
       display: grid;
-      grid-template-columns: 3fr 1fr; /* 3/4 video, 1/4 playlist */
       gap: 2rem;
-      transition: grid-template-columns 0.4s ease-in-out;
-    }
-    
-    .video-content-grid.playlist-hidden {
-        grid-template-columns: 1fr; /* 100% video when playlist is hidden */
     }
 
-    .main-video-column {
+    .class-card {
+      background: var(--gradient-card);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .class-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-right: 4px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .class-header:hover {
+      background: var(--card-hover);
+    }
+
+    .class-header h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .class-header span {
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+
+    .lectures-list {
+      display: none;
+      gap: 1rem;
+      padding: 0 2rem 2rem;
+    }
+
+    .lecture-item {
+      position: relative;
+      padding: 1.2rem 1.5rem 1.2rem 3rem;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      border-right: 3px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lecture-item:hover {
+      background: var(--card-hover);
+      transform: translateX(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .lecture-content {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lecture-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--primary);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      background: transparent;
+      flex-shrink: 0;
+    }
+
+    .lecture-checkbox.completed {
+      background: var(--primary);
+      color: white;
+    }
+
+    .lecture-checkbox:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(0,123,255,0.3); /* Blue Shadow */
+    }
+
+    .lecture-title {
+      flex-grow: 1;
+    }
+
+    .lecture-progress {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-right: 1rem;
+    }
+
+    /* Video page */
+    .video-page {
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -383,78 +573,22 @@
       background: var(--gradient-card);
       padding: 2rem;
       border-radius: 15px;
+      text-align: center;
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
     }
 
-    .playlist-container {
-      background: var(--gradient-card);
-      padding: 1.5rem;
-      border-radius: 15px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border-color);
-      overflow-y: auto; 
-      max-height: calc(100vh - 100px); 
-      transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+    .video-details h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .video-details p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
     }
     
-    .playlist-container.hidden {
-        display: none; /* إخفاء العنصر بالكامل عند إيقاف التشغيل */
-    }
-    
-    .playlist-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--primary);
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid var(--border-color);
-        padding-bottom: 0.5rem;
-    }
-
-    #togglePlaylistBtn {
-        background: var(--primary);
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background 0.3s;
-    }
-
-    #togglePlaylistBtn:hover {
-        background: var(--primary-dark);
-    }
-
-    .playlist-item {
-        padding: 0.8rem 1rem;
-        margin-bottom: 0.5rem;
-        background: var(--bg-secondary);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-        border-right: 3px solid transparent;
-        font-size: 0.95rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .playlist-item:hover {
-        background: var(--card-hover);
-        transform: translateX(5px);
-    }
-
-    .playlist-item.active-lecture {
-        border-right-color: var(--primary);
-        background: var(--primary);
-        color: white;
-        font-weight: 600;
-        box-shadow: var(--shadow-hover);
-    }
-
     /* ===== تنسيق العلامة المائية ===== */
     .video-watermark {
       position: absolute;
@@ -467,9 +601,10 @@
       justify-content: center;
       font-size: 1.5rem;
       font-weight: bold;
-      color: rgba(255, 255, 255, 0.2); 
-      pointer-events: none; 
+      color: rgba(255, 255, 255, 0.2); /* لون رمادي شفاف */
+      pointer-events: none; /* هذا السطر مهم جداً ليسمح بالضغط على الفيديو */
       z-index: 10;
+      /* لمنع النسخ */
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -477,765 +612,926 @@
     }
     /* ============================================= */
 
-    /* Responsive design */
-    @media (max-width: 1024px) {
-        .video-content-grid, .video-content-grid.playlist-hidden {
-            grid-template-columns: 1fr; /* Stack on smaller screens */
-        }
-        .playlist-container {
-            max-height: 400px; /* Limit height when stacked */
-        }
+    /* Materials and Exams */
+    .materials-grid, .exams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 2rem 0;
     }
 
+    .material-card, .exam-card {
+      background: var(--gradient-card);
+      padding: 2rem;
+      border-radius: 20px;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .material-card::before, .exam-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .material-card:hover, .exam-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .material-card:hover::before, .exam-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .material-img, .exam-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .material-card:hover .material-img, .exam-card:hover .exam-img {
+      transform: scale(1.05);
+    }
+
+    .material-title, .exam-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .material-subject, .exam-subject {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .download-btn {
+      display: block;
+      width: 100%;
+      background: var(--gradient-primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      animation: fadeIn 0.3s;
+    }
+
+    .modal-content {
+      background: var(--gradient-card);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      position: relative;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: var(--shadow-hover);
+      animation: slideUp 0.3s;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-content img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 3px solid var(--primary);
+    }
+
+    .modal-content a {
+      display: inline-block;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      margin: 1rem 0.5rem;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .modal-content a:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .close-modal:hover {
+      background: var(--error);
+      color: white;
+    }
+
+    /* Loading states */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive design */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
         padding: 1rem;
         gap: 1rem;
       }
+
+      .site-title {
+        font-size: 1.5rem;
+      }
+
       .nav-buttons {
         width: 100%;
         justify-content: center;
         margin: 0;
       }
+
+      .nav-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
       .search-container {
         width: 100%;
+      }
+
+      .teachers-grid, .materials-grid, .exams-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .teacher-info {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .teacher-img, .teacher-img-lg {
+        width: 120px;
+        height: 120px;
+      }
+
+      .page {
+        padding: 1rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .site-title {
+        font-size: 1.2rem;
+      }
+
+      .nav-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      #searchInput {
+        padding: 0.8rem 1rem;
+      }
+
+      .teacher-card, .material-card, .exam-card {
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
       }
     }
   </style>
  </head>
- <body> 
-  
-  <div id="loginModal" class="modal" style="display: none;"> <div class="modal-content" style="max-width: 500px;">
-          <i class="fas fa-lock" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-          <h3>مرحباً بك في منصة التفوقQM</h3>
-          <p>الرجاء إدخال كود الدخول الخاص بك للمتابعة:</p>
-          <input type="password" id="accessCodeInput" placeholder="أدخل كود الدخول هنا" style="width: 100%; padding: 1rem; margin: 1rem 0; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-color); font-size: 1.1rem; text-align: center;" onkeydown="if(event.key === 'Enter') checkAccessCode()">
-          <button id="accessButton" class="download-btn" onclick="checkAccessCode()"><i class="fas fa-sign-in-alt"></i> الدخول للمنصة</button>
-          <p id="accessError" style="color: var(--error); margin-top: 1rem; display: none; font-weight: bold;">كود الدخول غير صحيح. حاول مرة أخرى.</p>
-      </div>
+ <body>
+  <div id="loginModal" class="modal" style="display: none;">
+   <div class="modal-content" style="max-width: 500px;">
+    <i class="fas fa-lock" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+    <h3>مرحباً بك في منصة التفوقQM</h3>
+    <p>الرجاء إدخال كود الدخول الخاص بك للمتابعة:</p>
+    <input type="password" id="accessCodeInput" placeholder="أدخل كود الدخول هنا" style="width: 100%; padding: 1rem; margin: 1rem 0; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-color); font-size: 1.1rem; text-align: center;" onkeydown="if(event.key === 'Enter') checkAccessCode()">
+    <button id="accessButton" class="download-btn" onclick="checkAccessCode()"><i class="fas fa-sign-in-alt"></i> الدخول للمنصة</button>
+    <p id="accessError" style="color: var(--error); margin-top: 1rem; display: none; font-weight: bold;">كود الدخول غير صحيح. حاول مرة أخرى.</p>
+   </div>
   </div>
   <div id="appContent" style="display: none;">
-    <header>
-     <h1 class="site-title" onclick="navigate('home')"><i class="fas fa-graduation-cap"></i> منصة التفوقQM</h1>
-     <div class="nav-buttons">
-      <button class="nav-btn active" onclick="loadContent('lectures')"><i class="fas fa-play-circle"></i> المحاضرات</button>
-      <button class="nav-btn" onclick="loadContent('materials')"><i class="fas fa-book"></i> الملازم</button>
-      <button class="nav-btn" onclick="loadContent('exams')"><i class="fas fa-clipboard-check"></i> الامتحانات</button>
-     </div>
-     <div class="search-container">
-      <input type="text" id="searchInput" placeholder="ابحث عن مدرس أو مادة...">
-      <button id="searchButton"><i class="fas fa-search"></i> بحث</button>
-     </div>
-     <button id="themeToggle"><i class="fas fa-moon"></i></button>
-    </header>
-
-    <div id="homePage" class="page">
-     <div class="teachers-section">
-      <h2 class="section-title">اضغط على الصوره لدخول</h2>
-      <div class="teachers-grid" id="teachersGrid">
-       <div class="loading">
-        <div class="spinner"></div>
-       </div>
+   <header>
+    <h1 class="site-title" onclick="navigate('home')"><i class="fas fa-graduation-cap"></i> منصة التفوقQM</h1>
+    <div class="nav-buttons">
+     <button class="nav-btn active" onclick="loadContent('lectures')"><i class="fas fa-play-circle"></i> المحاضرات</button>
+     <button class="nav-btn" onclick="loadContent('materials')"><i class="fas fa-book"></i> الملازم</button>
+     <button class="nav-btn" onclick="loadContent('exams')"><i class="fas fa-clipboard-check"></i> الامتحانات</button>
+    </div>
+    <div class="search-container">
+     <input type="text" id="searchInput" placeholder="ابحث عن مدرس أو مادة...">
+     <button id="searchButton"><i class="fas fa-search"></i> بحث</button>
+    </div>
+    <button id="themeToggle"><i class="fas fa-moon"></i></button>
+   </header>
+   <div id="homePage" class="page">
+    <div class="teachers-section">
+     <h2 class="section-title">نخبة الأساتذة المتميزين</h2>
+     <div class="teachers-grid" id="teachersGrid">
+      <div class="loading">
+       <div class="spinner"></div>
       </div>
      </div>
     </div>
-
-    <div id="classesPage" class="page">
-     <div class="classes-page">
-      <button class="back-button" onclick="navigate('home')"><i class="fas fa-arrow-right"></i> الرجوع للمدرسين</button>
-      <div class="teacher-info">
-       <img id="teacherImage" class="teacher-img-lg" alt="صورة المدرس">
-       <div class="teacher-details">
-        <h2 id="teacherName"></h2>
-        <p id="teacherSubject"></p>
-       </div>
+   </div>
+   <div id="classesPage" class="page">
+    <div class="classes-page">
+     <button class="back-button" onclick="navigate('home')"><i class="fas fa-arrow-right"></i> الرجوع للمدرسين</button>
+     <div class="teacher-info">
+      <img id="teacherImage" class="teacher-img-lg" alt="صورة المدرس">
+      <div class="teacher-details">
+       <h2 id="teacherName"></h2>
+       <p id="teacherSubject"></p>
       </div>
-      <div class="classes-list" id="classesList"></div>
+     </div>
+     <div class="classes-list" id="classesList"></div>
+    </div>
+   </div>
+   <div id="videoPage" class="page">
+    <div class="video-page">
+     <div class="video-container">
+      <video id="player" playsinline controls></video>
+      <div id="videoWatermark" class="video-watermark"></div>
+     </div>
+     <div class="video-details">
+      <h2 id="videoTitle"></h2>
+      <p id="videoDescription"></p>
+      <button class="copy-button" onclick="copyLectureLink()"><i class="fas fa-copy"></i></button>
+      <button class="back-button" onclick="navigate('classes')"><i class="fas fa-arrow-right"></i> العودة للفصول</button>
      </div>
     </div>
-
-    <div id="videoPage" class="page">
-     <div id="videoContentGrid" class="video-content-grid"> 
-        <div class="main-video-column">
-            <div class="video-container">
-                <video id="player" playsinline controls></video>
-                <div id="videoWatermark" class="video-watermark"></div>
-            </div>
-            <div class="video-details">
-                <h2 id="videoTitle"></h2>
-                <p id="videoDescription"></p>
-                <button class="copy-button" onclick="copyLectureLink()"><i class="fas fa-copy"></i> نسخ رابط المحاضرة</button>
-                <button class="back-button" onclick="navigate('classes')"><i class="fas fa-arrow-right"></i> العودة للفصول</button>
-            </div>
-        </div>
-        
-        <div class="playlist-container" id="playlistContainer"> 
-            <div class="playlist-header">
-                <h3>قائمة محاضرات الفصل:</h3>
-                <button id="togglePlaylistBtn" onclick="togglePlaylist()"><i class="fas fa-eye-slash"></i> إخفاء</button>
-            </div>
-            <div id="playlistList">
-                <div class="loading">
-                    <div class="spinner"></div>
-                </div>
-            </div>
-        </div>
-     </div>
-    </div>
-
-    <div id="materialsPage" class="page">
-     <div class="materials-section">
-      <h2 class="section-title">الملازم الدراسية</h2>
-      <div class="materials-grid" id="materialsGrid">
-       <div class="loading">
-        <div class="spinner"></div>
-       </div>
+   </div>
+   <div id="materialsPage" class="page">
+    <div class="materials-section">
+     <h2 class="section-title">الملازم الدراسية</h2>
+     <div class="materials-grid" id="materialsGrid">
+      <div class="loading">
+       <div class="spinner"></div>
       </div>
      </div>
     </div>
-
-    <div id="examsPage" class="page">
-     <div class="exams-section">
-      <h2 class="section-title">الامتحانات</h2>
-      <div class="exams-grid" id="examsGrid">
-       <div class="loading">
-        <div class="spinner"></div>
-       </div>
+   </div>
+   <div id="examsPage" class="page">
+    <div class="exams-section">
+     <h2 class="section-title">الامتحانات</h2>
+     <div class="exams-grid" id="examsGrid">
+      <div class="loading">
+       <div class="spinner"></div>
       </div>
      </div>
     </div>
-
-    <div id="telegramModal" class="modal" style="display: none;">
-     <div class="modal-content">
-      <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
-      <img src="https://cdn.glitch.global/d472cc04-f40d-483a-8a7d-67c6c1ddaaff/Picsart_25-04-18_07-56-03-508.jpg?v=1744952192982" alt="قناة التليجرام">
-      <h3>اشترك في قناة التليجرام</h3>
-      <p>تابع آخر التحديثات والمحتوى الجديد</p>
-      <a href="https://t.me/sads86ff" target="_blank"> <i class="fab fa-telegram-plane"></i> اذهب للقناة </a>
-      <br>
-      <button onclick="closeModal()" class="download-btn" style="margin-top: 1rem;"><i class="fas fa-check"></i> لقد اشتركت</button>
-     </div>
+   </div>
+   <div id="telegramModal" class="modal" style="display: none;">
+    <div class="modal-content">
+     <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+     <img src="https://cdn.glitch.global/d472cc04-f40d-483a-8a7d-67c6c1ddaaff/Picsart_25-04-18_07-56-03-508.jpg?v=1744952192982" alt="قناة التليجرام">
+     <h3>اشترك في قناة التليجرام</h3>
+     <p>تابع آخر التحديثات والمحتوى الجديد</p>
+     <a href="https://t.me/sads86ff" target="_blank"> <i class="fab fa-telegram-plane"></i> اذهب للقناة </a>
+     <br>
+     <button onclick="closeModal()" class="download-btn" style="margin-top: 1rem;"><i class="fas fa-check"></i> لقد اشتركت</button>
     </div>
+   </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script src="https://cdn.plyr.io/3.7.2/plyr.polyfilled.js"></script>
   <script>
     // *** كود الحماية ضد أدوات المطورين (DevTools) ***
     function blockDevTools() {
-        let devtoolsOpen = false;
-        const threshold = 160;
-        const check = () => {
-            const sizeCheck = window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100;
-            const start = performance.now();
-            try {
+      let devtoolsOpen = false;
+      const threshold = 160;
+      const check = () => {
+        const sizeCheck = window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100;
+        const start = performance.now();
+        try {
+          // محاولة إيقاف التنفيذ باستخدام الـ debugger
+          new Function('debugger')();
+        } catch (e) {}
+        const end = performance.now();
+        // Check if devtools are open by checking window size difference or performance delay
+        if (sizeCheck || (end - start) > threshold) {
+          if (!devtoolsOpen) {
+            devtoolsOpen = true;
+            document.body.innerHTML = '<div style="background: black; color: red; font-size: 2rem; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999;"><h1>! خطأ !</h1><p style="font-size: 1.2rem;">تم اكتشاف محاولة الوصول غير المصرح بها (DevTools).</p><p style="font-size: 1.2rem;">يرجى إغلاق أدوات المطورين.</p></div>';
+            // محاولة إيقاف التنفيذ بشكل متكرر
+            const preventExecution = setInterval(() => {
+              try {
                 new Function('debugger')();
-            } catch (e) {}
-            const end = performance.now();
-            if (sizeCheck || (end - start) > threshold) {
-                if (!devtoolsOpen) {
-                    devtoolsOpen = true;
-                    document.body.innerHTML = '<div style="background: black; color: red; font-size: 2rem; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999;"><h1>! خطأ !</h1><p style="font-size: 1.2rem;">تم اكتشاف محاولة الوصول غير المصرح بها (DevTools).</p><p style="font-size: 1.2rem;">يرجى إغلاق أدوات المطورين.</p></div>';
-                    const preventExecution = setInterval(() => {
-                        try {
-                            new Function('debugger')();
-                        } catch (e) {
-                            if (!window.outerWidth) clearInterval(preventExecution);
-                        }
-                    }, 100);
-                }
-            } else {
-                devtoolsOpen = false;
-            }
-        };
-        setInterval(check, 1000);
-
-        document.onkeydown = function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || (e.metaKey && e.altKey && e.key === 'i')) {
-                e.preventDefault();
-                check();
-                return false;
-            }
-        };
-
-        window.addEventListener('resize', check);
+              } catch (e) {
+                // إذا تم إغلاق الأدوات، سيتم إيقاف الإنترڤال
+                if (!window.outerWidth) clearInterval(preventExecution);
+              }
+            }, 100);
+          }
+        } else {
+          devtoolsOpen = false;
+        }
+      };
+      setInterval(check, 1000);
+      document.onkeydown = function(e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || (e.metaKey && e.altKey && e.key === 'i')) {
+          e.preventDefault();
+          check();
+          return false;
+        }
+      };
+      window.addEventListener('resize', check);
     }
     blockDevTools();
-    
+
     // إعداد الثيم الأولي
     function initializeTheme() {
-        const stored = localStorage.getItem('theme');
-        const theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-        document.documentElement.setAttribute('data-theme', theme);
-        updateThemeIcon(theme);
+      const stored = localStorage.getItem('theme');
+      const theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+      updateThemeIcon(theme);
     }
 
     function updateThemeIcon(theme) {
-        const icon = document.querySelector('#themeToggle i');
-        icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+      const icon = document.querySelector('#themeToggle i');
+      icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
-    
-    // تبديل الثيم
+
     document.getElementById('themeToggle').addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
     });
 
     // إدارة حفظ تقدم المستخدم وموضع الفيديو
     let completedLectures = JSON.parse(localStorage.getItem('completedLectures') || '{}');
     let videoProgress = JSON.parse(localStorage.getItem('videoProgress') || '{}');
+    let appData = null;
+    let currentTeacher = null;
+    let currentPage = 'home';
+    let player = null;
 
     function saveCompleted() {
-        localStorage.setItem('completedLectures', JSON.stringify(completedLectures));
+      localStorage.setItem('completedLectures', JSON.stringify(completedLectures));
     }
 
     function saveVideoProgress(url, currentTime) {
-        videoProgress[url] = currentTime;
-        localStorage.setItem('videoProgress', JSON.stringify(videoProgress));
+      videoProgress[url] = currentTime;
+      localStorage.setItem('videoProgress', JSON.stringify(videoProgress));
     }
 
     function getVideoProgress(url) {
-        return videoProgress[url] || 0;
+      return videoProgress[url] || 0;
     }
 
     function markLectureCompleted(url, completed = true) {
-        completedLectures[url] = completed;
-        saveCompleted();
-        if (currentTeacher) renderClasses(currentTeacher.classes);
-        if (pages.video.classList.contains('active') && currentTeacher) {
-            const currentClass = currentTeacher.classes[currentClassIndex];
-            renderPlaylist(currentClass.lectures, currentLectureIndex, currentTeacher.id, currentClassIndex);
-        }
+      completedLectures[url] = completed;
+      saveCompleted();
+      if (currentTeacher) renderClasses(currentTeacher.classes);
     }
 
     function toggleLectureCompletion(url, event) {
-        event.stopPropagation();
-        const isCompleted = completedLectures[url];
-        markLectureCompleted(url, !isCompleted);
+      event.stopPropagation();
+      const isCompleted = completedLectures[url];
+      markLectureCompleted(url, !isCompleted);
     }
 
-    // إعداد مشغل الفيديو
-    let hls;
-    const player = new Plyr('#player', {
-        controls: ['play-large', 'rewind', 'play', 'fast-forward', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'airplay', 'fullscreen'],
-        settings: ['speed', 'quality'],
-        speed: { selected: 1, options: [0.5, 1, 1.25, 1.5, 2] },
-        seekTime: 10
-    });
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60).toString().padStart(2, '0');
+      return `${minutes}:${remainingSeconds}`;
+    }
 
-    // حفظ تقدم الفيديو كل 5 ثوان
-    let progressSaveInterval;
-    player.on('play', () => {
-        progressSaveInterval = setInterval(() => {
-            if (currentLectureLink && player.currentTime > 0) {
-                saveVideoProgress(currentLectureLink, player.currentTime);
-            }
-        }, 5000);
-    });
-
-    player.on('pause', () => {
-        if (progressSaveInterval) {
-            clearInterval(progressSaveInterval);
-        }
-        if (currentLectureLink && player.currentTime > 0) {
-            saveVideoProgress(currentLectureLink, player.currentTime);
-        }
-    });
-
-    // متغيرات عامة
-    const pages = {
-        home: document.getElementById('homePage'),
-        classes: document.getElementById('classesPage'),
-        video: document.getElementById('videoPage'),
-        materials: document.getElementById('materialsPage'),
-        exams: document.getElementById('examsPage')
-    };
-    const teachersGrid = document.getElementById('teachersGrid');
-    const materialsGrid = document.getElementById('materialsGrid');
-    const examsGrid = document.getElementById('examsGrid');
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-    const navButtons = document.querySelectorAll('.nav-btn');
-
-    let teachers = [], currentTeacher = null, currentClassIndex = 0, currentLectureIndex = 0, currentLectureLink = '';
-    let materials = [], exams = [];
-
-    // دالة التنقل
+    // إدارة التنقل بين الصفحات
     function navigate(page, data = null) {
-        if (progressSaveInterval) {
-            clearInterval(progressSaveInterval);
-            progressSaveInterval = null;
-        }
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      currentPage = page;
 
-        Object.values(pages).forEach(p => p.classList.remove('active'));
-        pages[page].classList.add('active');
-
-        navButtons.forEach(btn => btn.classList.remove('active'));
-        if (page === 'home' || page === 'classes' || page === 'video') {
-            document.querySelector('.nav-btn:nth-child(1)').classList.add('active');
-        } else if (page === 'materials') {
-            document.querySelector('.nav-btn:nth-child(2)').classList.add('active');
-        } else if (page === 'exams') {
-            document.querySelector('.nav-btn:nth-child(3)').classList.add('active');
-        }
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        if (page === 'classes' && data) {
-            currentTeacher = data.teacher;
-            currentClassIndex = data.classIndex; 
-            renderTeacherClasses(currentTeacher);
-        }
+      if (page === 'home') {
+        document.getElementById('homePage').classList.add('active');
+        document.querySelector('[onclick="loadContent(\'lectures\')"]').classList.add('active');
+        loadTeachers(appData.teachers);
+        currentTeacher = null;
+      } else if (page === 'classes' && data) {
+        document.getElementById('classesPage').classList.add('active');
+        currentTeacher = data;
+        document.getElementById('teacherImage').src = data.image;
+        document.getElementById('teacherName').textContent = data.name;
+        document.getElementById('teacherSubject').textContent = data.subject;
+        renderClasses(data.classes);
+      } else if (page === 'video' && data) {
+        document.getElementById('videoPage').classList.add('active');
+        playVideo(data.url, data.title, data.description);
+      } else if (page === 'materials') {
+        document.getElementById('materialsPage').classList.add('active');
+        document.querySelector('[onclick="loadContent(\'materials\')"]').classList.add('active');
+        renderMaterials(appData.materials);
+      } else if (page === 'exams') {
+        document.getElementById('examsPage').classList.add('active');
+        document.querySelector('[onclick="loadContent(\'exams\')"]').classList.add('active');
+        renderExams(appData.exams);
+      }
     }
 
-    // دالة تحميل المحتوى الأساسي (المحاضرات، الملازم، الامتحانات)
-    function loadContent(contentType) {
-        if (contentType === 'lectures') {
-            navigate('home');
-        } else if (contentType === 'materials') {
-            navigate('materials');
-            renderMaterials(materials);
-        } else if (contentType === 'exams') {
-            navigate('exams');
-            renderExams(exams);
-        }
+    function loadContent(content) {
+      if (content === 'lectures') {
+        navigate('home');
+      } else if (content === 'materials') {
+        navigate('materials', appData);
+      } else if (content === 'exams') {
+        navigate('exams', appData);
+      }
     }
 
-    // عرض قائمة المدرسين
-    function renderTeachers(teacherList) {
-        teachersGrid.innerHTML = '';
-        if (teacherList.length === 0) {
-            teachersGrid.innerHTML = '<p style="text-align: center; font-size: 1.2rem;">لا يوجد مدرسون مطابقون لنتيجة البحث.</p>';
-            return;
-        }
-        teacherList.forEach(teacher => {
-            const card = document.createElement('div');
-            card.className = 'teacher-card';
-            card.setAttribute('onclick', `Maps('classes', { teacher: teachers.find(t => t.id === ${teacher.id}), classIndex: 0 })`);
-            card.innerHTML = `
-                <img src="${teacher.image}" class="teacher-img" alt="صورة المدرس">
-                <h3 class="teacher-name" style="display: none;">${teacher.name}</h3>
-                <p class="teacher-subject" style="display: none;">${teacher.subject}</p>
-            `;
-            teachersGrid.appendChild(card);
-        });
+    // تحميل وعرض المدرسين
+    function loadTeachers(teachers) {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filteredTeachers = teachers.filter(teacher =>
+        teacher.name.toLowerCase().includes(searchTerm) ||
+        teacher.subject.toLowerCase().includes(searchTerm)
+      );
+      renderTeachers(filteredTeachers);
     }
 
-    // عرض فصول المدرس
-    function renderTeacherClasses(teacher) {
-        document.getElementById('teacherImage').src = teacher.image;
-        document.getElementById('teacherName').textContent = teacher.name;
-        document.getElementById('teacherSubject').textContent = teacher.subject;
-        const classesList = document.getElementById('classesList');
-        classesList.innerHTML = '';
+    function renderTeachers(teachers) {
+      const teachersGrid = document.getElementById('teachersGrid');
+      teachersGrid.innerHTML = '';
+      if (!teachers || teachers.length === 0) {
+        teachersGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">لا يوجد مدرسون حاليًا.</p>';
+        return;
+      }
 
-        teacher.classes.forEach((classItem, classIndex) => {
-            const classCard = document.createElement('div');
-            classCard.className = 'class-card';
+      teachers.forEach(teacher => {
+        const card = document.createElement('div');
+        card.className = 'teacher-card';
+        // 🟢 FIX: ربط دالة التنقل بالبطاقة بالكامل
+        card.onclick = () => navigate('classes', teacher);
 
-            const lecturesCompleted = classItem.lectures.filter(lec => completedLectures[lec.url]).length;
-            
-            classCard.innerHTML = `
-                <div class="class-header" onclick="toggleLectures(this)">
-                    <h3>${classItem.name}</h3>
-                    <span>${lecturesCompleted}/${classItem.lectures.length} <i class="fas fa-chevron-down"></i></span>
+        card.innerHTML = `
+          <img src="${teacher.image}" alt="${teacher.name}" class="teacher-img">
+          <h4 class="teacher-name">${teacher.name}</h4>
+          <p class="teacher-subject">${teacher.subject}</p>
+        `;
+        teachersGrid.appendChild(card);
+      });
+    }
+
+    document.getElementById('searchButton').addEventListener('click', () => {
+      if (currentPage === 'home') loadTeachers(appData.teachers);
+      // يمكن إضافة منطق البحث في صفحات الملازم والامتحانات هنا
+    });
+
+    document.getElementById('searchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && currentPage === 'home') {
+        loadTeachers(appData.teachers);
+      }
+    });
+
+
+    // تحميل وعرض الفصول (الوحدات)
+    function renderClasses(classes) {
+      const classesList = document.getElementById('classesList');
+      classesList.innerHTML = '';
+
+      classes.forEach((classItem, index) => {
+        const classCard = document.createElement('div');
+        classCard.className = 'class-card';
+
+        const completedCount = classItem.lectures.filter(l => completedLectures[l.url]).length;
+        const totalCount = classItem.lectures.length;
+        const progressText = completedCount === totalCount ? 'مكتمل ✅' : `(${completedCount}/${totalCount})`;
+
+        classCard.innerHTML = `
+          <div class="class-header" onclick="toggleLectures(this)">
+            <h3>${classItem.name}</h3>
+            <span>${progressText} <i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="lectures-list" id="lectures-${index}">
+            ${classItem.lectures.map(lecture => `
+              <div class="lecture-item" onclick="navigate('video', {url: '${lecture.url}', title: '${lecture.title}', description: '${lecture.description}'})">
+                <div class="lecture-content">
+                  <div class="lecture-checkbox ${completedLectures[lecture.url] ? 'completed' : ''}" onclick="toggleLectureCompletion('${lecture.url}', event)">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span class="lecture-title">${lecture.title}</span>
                 </div>
-                <div class="lectures-list" data-class-index="${classIndex}">
-                    ${classItem.lectures.map((lecture, lectureIndex) => {
-                        const isCompleted = completedLectures[lecture.url] || false;
-                        return `
-                            <div class="lecture-item" onclick="openVideo(${teacher.id}, ${classIndex}, ${lectureIndex})">
-                                <div class="lecture-content">
-                                    <span class="lecture-checkbox ${isCompleted ? 'completed' : ''}" onclick="toggleLectureCompletion('${lecture.url}', event)">
-                                        ${isCompleted ? '<i class="fas fa-check"></i>' : ''}
-                                    </span>
-                                    <div class="lecture-title">${lecture.title}</div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-            `;
-            classesList.appendChild(classCard);
+              </div>
+            `).join('')}
+          </div>
+        `;
+        classesList.appendChild(classCard);
+      });
+    }
+
+    function toggleLectures(header) {
+      const list = header.nextElementSibling;
+      const icon = header.querySelector('i');
+      const isExpanded = list.style.display === 'grid';
+      list.style.display = isExpanded ? 'none' : 'grid';
+      icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    // تشغيل الفيديو
+    function playVideo(url, title, description) {
+      if (player) {
+        player.destroy();
+        player = null;
+      }
+
+      document.getElementById('videoTitle').textContent = title;
+      document.getElementById('videoDescription').textContent = description;
+
+      const videoElement = document.getElementById('player');
+      videoElement.src = '';
+      videoElement.poster = '';
+
+      if (Hls.isSupported() && url.endsWith('.m3u8')) {
+        const hls = new Hls({
+            // HLS.js configuration
+            maxBufferLength: 30, // Limit buffer to prevent excessive preloading
+            maxMaxBufferLength: 60,
+            capLevelOnDemand: true,
+            maxMaxStreams: 1,
+            autoStartLoad: true,
+            startPosition: getVideoProgress(url)
         });
-    }
+        hls.loadSource(url);
+        hls.attachMedia(videoElement);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          player = new Plyr(videoElement, {
+            ratio: '16:9',
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            seekTime: 10,
+            invertTime: false,
+          });
+          // Update progress on time update
+          player.on('timeupdate', () => {
+            saveVideoProgress(url, player.currentTime);
+          });
+          // Mark as complete after 95% is watched
+          player.on('ended', () => {
+            markLectureCompleted(url);
+          });
 
-    // فتح قائمة محاضرات الفصل
-    function toggleLectures(headerElement) {
-        const lecturesList = headerElement.nextElementSibling;
-        const arrow = headerElement.querySelector('span i');
-        if (lecturesList.style.display === 'grid') {
-            lecturesList.style.display = 'none';
-            arrow.style.transform = 'rotate(0deg)';
-        } else {
-            lecturesList.style.display = 'grid';
-            arrow.style.transform = 'rotate(180deg)';
-        }
-    }
-
-    // دالة عرض قائمة التشغيل
-    function renderPlaylist(lectures, currentLectureIndex, teacherId, classIndex) {
-        const playlistList = document.getElementById('playlistList');
-        if (!playlistList) return;
-
-        playlistList.innerHTML = ''; 
-
-        lectures.forEach((lecture, index) => {
-            const isCompleted = completedLectures[lecture.url] || false;
-            const isActive = index === currentLectureIndex;
-
-            const listItem = document.createElement('div');
-            listItem.className = `playlist-item ${isActive ? 'active-lecture' : ''}`;
-            listItem.setAttribute('onclick', `openVideo(${teacherId}, ${classIndex}, ${index})`);
-
-            let statusIcon = '';
-            if (isActive) {
-                statusIcon = '<i class="fas fa-play" style="margin-left: 0.5rem;"></i>';
-            } else if (isCompleted) {
-                statusIcon = '<i class="fas fa-check-circle" style="color: var(--success); margin-left: 0.5rem;"></i>';
-            } else {
-                statusIcon = '<i class="fas fa-circle" style="color: var(--text-secondary); font-size: 0.7em; margin-left: 0.5rem;"></i>';
-            }
-
-            listItem.innerHTML = `
-                <span>${statusIcon} ${lecture.title}</span>
-            `;
-            
-            playlistList.appendChild(listItem);
+          // Prevent right-click/context menu on the video player area
+          player.elements.container.addEventListener('contextmenu', e => e.preventDefault());
+          player.elements.container.addEventListener('selectstart', e => e.preventDefault());
         });
-    }
-
-    // دالة التحكم في إظهار وإخفاء قائمة التشغيل (NEW)
-    function togglePlaylist() {
-        const grid = document.getElementById('videoContentGrid');
-        const playlist = document.getElementById('playlistContainer');
-        const button = document.getElementById('togglePlaylistBtn');
-        const icon = button.querySelector('i');
-
-        if (grid.classList.contains('playlist-hidden')) {
-            // إظهار قائمة التشغيل
-            grid.classList.remove('playlist-hidden');
-            playlist.classList.remove('hidden');
-            icon.className = 'fas fa-eye-slash';
-            button.innerHTML = '<i class="fas fa-eye-slash"></i> إخفاء';
-        } else {
-            // إخفاء قائمة التشغيل
-            grid.classList.add('playlist-hidden');
-            playlist.classList.add('hidden');
-            icon.className = 'fas fa-eye';
-            button.innerHTML = '<i class="fas fa-eye"></i> إظهار';
-        }
-        // إعادة تحميل المشغل لضمان تعديل حجمه إذا كان في وضع الشاشة الكاملة
-        player.fullscreen.exit(); 
-    }
-
-    // فتح صفحة الفيديو (تم تحسينها للتعامل مع أي رابط)
-    function openVideo(teacherId, classIndex, lectureIndex) {
-        const teacher = teachers.find(t => t.id === teacherId);
-        if (!teacher) return;
-
-        const currentClass = teacher.classes[classIndex];
-        const lecture = currentClass.lectures[lectureIndex];
-        if (!lecture) return;
-
-        currentTeacher = teacher;
-        currentClassIndex = classIndex;
-        currentLectureIndex = lectureIndex;
-        currentLectureLink = lecture.url;
-
-        document.getElementById('videoTitle').textContent = lecture.title;
-        document.getElementById('videoDescription').textContent = lecture.description;
+        hls.on(Hls.Events.ERROR, function (event, data) {
+          if (data.fatal) {
+            console.error('HLS fatal error:', data);
+            // Fallback: reload the entire page or show a clear error
+            document.getElementById('videoTitle').textContent = '⚠️ خطأ في تشغيل الفيديو';
+            document.getElementById('videoDescription').textContent = 'لا يمكن تشغيل الملف. قد يكون الرابط غير صالح أو هناك مشكلة في الشبكة.';
+            videoElement.style.display = 'none';
+          }
+        });
+      } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        // Fallback for YouTube or other direct video links (using Plyr's built-in support)
+        videoElement.outerHTML = '<div data-plyr-provider="youtube" data-plyr-embed-id="' + extractYoutubeId(url) + '" id="player-youtube"></div>';
         
-        renderPlaylist(currentClass.lectures, lectureIndex, teacherId, classIndex);
+        player = new Plyr('#player-youtube', {
+            ratio: '16:9',
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            seekTime: 10,
+            invertTime: false,
+        });
 
-        if (hls) hls.destroy();
-        hls = null;
-        player.stop(); 
-
-        const videoElement = document.getElementById('player');
-        videoElement.src = ''; 
-        videoElement.poster = ''; 
+        // Youtube players also need progress management, but it's more complex.
+        // For simplicity with YouTube, we'll rely on the "Mark as Complete" button for now.
+        // It's also safer not to support external platforms widely if protection is key.
+      } else {
+        // Direct video link (e.g., mp4)
+        videoElement.src = url;
+        player = new Plyr(videoElement, {
+            ratio: '16:9',
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+            seekTime: 10,
+            invertTime: false,
+        });
+        player.on('ready', () => {
+            player.currentTime = getVideoProgress(url);
+        });
+        player.on('timeupdate', () => {
+          saveVideoProgress(url, player.currentTime);
+        });
+        player.on('ended', () => {
+          markLectureCompleted(url);
+        });
         
-        // **NEW: تحديد نوع الرابط بمرونة**
-        const url = lecture.url;
-        const isHls = Hls.isSupported() && url.includes('.m3u8');
-        const isYouTube = url.includes('youtu.be') || url.includes('youtube.com');
-        const isDirectVideo = url.includes('.mp4') || url.includes('.webm') || url.includes('.mov');
-
-        if (isHls) {
-            // HLS stream
-            hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(videoElement);
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                player.currentTime = getVideoProgress(url);
-                player.play();
-            });
-        } else if (isYouTube) {
-            // YouTube link
-            let videoId;
-            if (url.includes('youtu.be')) {
-                videoId = url.split('/').pop().split('?')[0];
-            } else if (url.includes('youtube.com')) {
-                const urlParams = new URLSearchParams(new URL(url).search);
-                videoId = urlParams.get('v');
-            }
-
-            if (videoId) {
-                player.source = {
-                    type: 'video',
-                    sources: [{
-                        src: videoId,
-                        provider: 'youtube',
-                    }],
-                };
-            } else {
-                console.error('Invalid YouTube URL:', url);
-                alert('عذراً، رابط يوتيوب غير صحيح.');
-                return;
-            }
-
-        } else if (isDirectVideo) {
-             // ملف فيديو مباشر (MP4, WebM, MOV)
-            player.source = {
-                type: 'video',
-                sources: [{
-                    src: url,
-                    type: isDirectVideo.includes('.mp4') ? 'video/mp4' : isDirectVideo.includes('.webm') ? 'video/webm' : 'video/mov', // تخمين النوع
-                }],
-            };
-            player.once('canplay', () => {
-                 player.currentTime = getVideoProgress(url);
-            });
-
-        } else {
-            // إذا لم يكن أي من الأنواع المعروفة، يمكن محاولة تشغيله كـ MP4 افتراضياً
-            console.warn('URL type unknown, attempting to play as direct video:', url);
-            player.source = {
-                type: 'video',
-                sources: [{
-                    src: url,
-                    type: 'video/mp4',
-                }],
-            };
-            player.once('canplay', () => {
-                 player.currentTime = getVideoProgress(url);
-            });
-        }
-
-        // إظهار العلامة المائية
-        document.getElementById('videoWatermark').textContent = `منصة التفوقQM - ${teacher.name}`;
-
-        navigate('video');
+        // Prevent right-click/context menu on the video player area
+        player.elements.container.addEventListener('contextmenu', e => e.preventDefault());
+        player.elements.container.addEventListener('selectstart', e => e.preventDefault());
+      }
+      
+      // Update watermark (Example: simple user ID or current time)
+      document.getElementById('videoWatermark').textContent = 'منصة التفوقQM - ' + (localStorage.getItem('userAccessCode') || 'Demo');
     }
 
-    // نسخ رابط المحاضرة
+    function extractYoutubeId(url) {
+        let id = '';
+        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|\w\?v=)|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
+        const match = url.match(regex);
+        if (match) {
+            id = match[1];
+        }
+        return id;
+    }
+    
+    // إدارة زر نسخ الرابط
     function copyLectureLink() {
-        if (currentLectureLink) {
-            navigator.clipboard.writeText(currentLectureLink).then(() => {
-                alert(`تم نسخ رابط المحاضرة بنجاح: ${currentLectureLink}`);
-            }).catch(err => {
-                console.error('Could not copy text: ', err);
-                alert('فشل في نسخ الرابط، يرجى المحاولة يدوياً.');
-            });
-        }
-    }
-
-    // دوال الملازم والامتحانات (بدون تغيير)
-
-    function renderMaterials(materialList) {
-        materialsGrid.innerHTML = '';
-        if (materialList.length === 0) {
-            materialsGrid.innerHTML = '<p style="text-align: center; font-size: 1.2rem;">لا توجد ملازم متاحة حاليًا.</p>';
-            return;
-        }
-        materialList.forEach(material => {
-            const card = document.createElement('div');
-            card.className = 'material-card';
-            card.innerHTML = `
-                <img src="${material.image}" class="material-img" alt="${material.title}">
-                <h3 class="material-title">${material.title}</h3>
-                <p class="material-subject">${material.subject}</p>
-                <a href="${material.downloadUrl}" target="_blank" class="download-btn"><i class="fas fa-download"></i> تحميل الملزمة</a>
-            `;
-            materialsGrid.appendChild(card);
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('تم نسخ رابط الصفحة بنجاح! لا تشاركه مع أي شخص.');
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            alert('فشل نسخ الرابط.');
         });
     }
 
-    function renderExams(examList) {
-        examsGrid.innerHTML = '';
-        if (examList.length === 0) {
-            examsGrid.innerHTML = '<p style="text-align: center; font-size: 1.2rem;">لا توجد امتحانات متاحة حاليًا.</p>';
-            return;
-        }
-        examList.forEach(exam => {
-            const card = document.createElement('div');
-            card.className = 'exam-card';
-            card.innerHTML = `
-                <img src="${exam.image}" class="exam-img" alt="${exam.title}">
-                <h3 class="exam-title">${exam.title}</h3>
-                <p class="exam-subject">${exam.subject}</p>
-                <a href="${exam.examUrl}" target="_blank" class="download-btn"><i class="fas fa-external-link-alt"></i> بدء الامتحان</a>
-            `;
-            examsGrid.appendChild(card);
-        });
+    // عرض الملازم
+    function renderMaterials(materials) {
+      const materialsGrid = document.getElementById('materialsGrid');
+      materialsGrid.innerHTML = '';
+
+      if (!materials || materials.length === 0) {
+        materialsGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">لا توجد ملازم متاحة حاليًا.</p>';
+        return;
+      }
+
+      materials.forEach(material => {
+        const card = document.createElement('div');
+        card.className = 'material-card';
+        card.innerHTML = `
+          <img src="${material.image || 'placeholder.jpg'}" alt="${material.title}" class="material-img">
+          <h4 class="material-title">${material.title}</h4>
+          <p class="material-subject">${material.subject}</p>
+          <p>${material.description}</p>
+          <a href="${material.url}" target="_blank" class="download-btn" onclick="return confirm('هل أنت متأكد من رغبتك في تنزيل الملف؟')">
+            <i class="fas fa-download"></i> تنزيل
+          </a>
+        `;
+        materialsGrid.appendChild(card);
+      });
     }
 
+    // عرض الامتحانات
+    function renderExams(exams) {
+      const examsGrid = document.getElementById('examsGrid');
+      examsGrid.innerHTML = '';
 
-    // منطق حماية الدخول (بدون تغيير)
-    let codesData = {};
-    let accessCodeValid = false;
-    let currentDeviceId = localStorage.getItem('deviceId') || `device-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem('deviceId', currentDeviceId);
+      if (!exams || exams.length === 0) {
+        examsGrid.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">لا توجد امتحانات متاحة حاليًا.</p>';
+        return;
+      }
 
-    async function fetchCodes() {
+      exams.forEach(exam => {
+        const card = document.createElement('div');
+        card.className = 'exam-card';
+        card.innerHTML = `
+          <img src="${exam.image || 'placeholder.jpg'}" alt="${exam.title}" class="exam-img">
+          <h4 class="exam-title">${exam.title}</h4>
+          <p class="exam-subject">${exam.subject}</p>
+          <p>${exam.description}</p>
+          <a href="${exam.url}" target="_blank" class="download-btn">
+            <i class="fas fa-external-link-alt"></i> ابدأ الاختبار
+          </a>
+        `;
+        examsGrid.appendChild(card);
+      });
+    }
+
+    // إدارة Modal (نافذة منبثقة)
+    function showModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    }
+
+    // *** منطق حماية الدخول (Access Code) ***
+    let accessCodes = {};
+    const DEVICE_ID = navigator.userAgent.replace(/[^a-zA-Z0-9]/g, ''); // Simple device fingerprint
+
+    async function loadAccessCodes() {
         try {
             const response = await fetch('codes.json');
             if (!response.ok) {
-                throw new Error('Failed to load codes.json');
+                console.error("Failed to fetch codes.json. Status:", response.status);
+                // Fallback: If network fails, allow if code is in localStorage
+                return;
             }
-            codesData = await response.json();
-            checkUserLogin();
+            accessCodes = await response.json();
+            console.log("Access codes loaded successfully.");
         } catch (error) {
-            console.error('Error fetching codes data:', error);
-            document.getElementById('accessError').innerText = 'حدث خطأ في تحميل بيانات الأكواد. يرجى تحديث الصفحة.';
-            document.getElementById('loginModal').style.display = 'flex';
+            console.error("Error loading access codes:", error);
         }
     }
-    
-    async function fetchData() {
-        try {
-            const response = await fetch('data.json');
-            if (!response.ok) {
-                throw new Error('Failed to load data.json');
-            }
-            const data = await response.json();
-            teachers = data.teachers || [];
-            materials = data.materials || [];
-            exams = data.exams || [];
-            renderTeachers(teachers);
-        } catch (error) {
-            console.error('Error fetching app data:', error);
-            teachersGrid.innerHTML = '<p style="text-align: center; color: var(--error); font-size: 1.2rem;">فشل في تحميل بيانات المدرسين والمحتوى.</p>';
-        }
-    }
-
 
     function loginSuccess() {
-        accessCodeValid = true;
-        document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('appContent').style.display = 'block';
-        document.body.style.overflow = 'auto'; 
-        fetchData(); 
-        navigate('home');
+      document.getElementById('loginModal').style.display = 'none';
+      document.getElementById('appContent').style.display = 'block';
+      document.body.style.overflow = 'auto'; // السماح بالتمرير بعد الدخول
+      navigate('home');
+      // showModal('telegramModal'); // يمكن تفعيل هذا لإظهار رسالة التليجرام
     }
-
-    function showLoginModal() {
-        document.getElementById('loginModal').style.display = 'flex';
-        document.getElementById('appContent').style.display = 'none';
-        document.body.style.overflow = 'hidden';
-    }
-
-    function checkUserLogin() {
+    
+    // 🔴 وظيفة الطرد الدوري: تتحقق ما إذا كان الكود لا يزال صالحًا
+    function startPeriodicCheck() {
+      setInterval(async () => {
         const storedCode = localStorage.getItem('userAccessCode');
-        if (storedCode && codesData[storedCode] && codesData[storedCode].used === true && codesData[storedCode].device === currentDeviceId) {
-            loginSuccess();
-            startPeriodicCheck(); 
-        } else {
-            showLoginModal();
+        if (!storedCode) return;
+        
+        await loadAccessCodes(); // إعادة تحميل الأكواد لمعرفة التغييرات
+        
+        const codeData = accessCodes[storedCode];
+        
+        if (!codeData || codeData.used === false) {
+             // تم إيقاف الكود أو حذفه من قبل المدرس
+             logout('تم إيقاف كود الدخول الخاص بك.');
+        } else if (codeData.device && codeData.device !== DEVICE_ID) {
+            // الكود مُفعل على جهاز آخر
+            logout('تم تفعيل الكود على جهاز آخر. يرجى التواصل مع المدرس.');
         }
+
+      }, 30000); // كل 30 ثانية
+    }
+    
+    function logout(message = 'انتهت صلاحية كود الدخول أو تم تفعيله على جهاز آخر.') {
+      localStorage.removeItem('userAccessCode');
+      alert(message);
+      document.getElementById('appContent').style.display = 'none';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('loginModal').style.display = 'flex';
     }
 
-    function checkAccessCode() {
-        const enteredCode = document.getElementById('accessCodeInput').value.toUpperCase().trim();
+
+    async function checkAccessCode() {
+        const inputElement = document.getElementById('accessCodeInput');
         const errorElement = document.getElementById('accessError');
+        const enteredCode = inputElement.value.toUpperCase().trim();
         errorElement.style.display = 'none';
-
-        if (!enteredCode) {
-            errorElement.innerText = 'الرجاء إدخال كود الدخول.';
-            errorElement.style.display = 'block';
-            return;
-        }
         
-        const codeInfo = codesData[enteredCode];
+        await loadAccessCodes(); // تأكد من تحميل أحدث الأكواد
 
-        if (codeInfo) {
-            if (codeInfo.used === true) {
-                if (codeInfo.device === currentDeviceId) {
-                    localStorage.setItem('userAccessCode', enteredCode);
+        const codeData = accessCodes[enteredCode];
+
+        if (codeData) {
+            if (codeData.used === true) {
+                if (codeData.device === DEVICE_ID) {
+                    // الكود مُفعل على هذا الجهاز
                     loginSuccess();
-                    startPeriodicCheck(); 
+                    startPeriodicCheck(); // 🟢 بدء التحقق الدوري
+                } else if (codeData.device) {
+                    // الكود مُفعل على جهاز آخر
+                    errorElement.innerText = 'الكود مستخدم حاليًا على جهاز آخر. تواصل مع المدرس.';
+                    errorElement.style.display = 'block';
                 } else {
-                    errorElement.innerText = 'هذا الكود مستخدم بالفعل على جهاز آخر. يرجى التواصل مع المدرس.';
+                    // الكود غير مُفعل على أي جهاز ولكن تم تعيين "used": true مسبقًا
+                    errorElement.innerText = 'هذا الكود مُفعل بالفعل. تواصل مع المدرس.';
                     errorElement.style.display = 'block';
                 }
-            } else if (codeInfo.used === false) {
-                codeInfo.used = true; 
-                codeInfo.device = currentDeviceId; 
-
-                localStorage.setItem('userAccessCode', enteredCode);
+            } else {
+                // الكود غير مُفعل (used: false) - يجب تفعيله الآن
+                // يتم حفظ الكود محليًا ويدخل المستخدم، وعلى المبرمج تحديث ملف codes.json يدوياً
+                localStorage.setItem('userAccessCode', enteredCode); 
                 loginSuccess();
-                startPeriodicCheck(); 
+                startPeriodicCheck(); // 🟢 بدء التحقق الدوري
                 
-                console.warn(`تم تفعيل الكود: ${enteredCode}. يرجى تحديث ملف codes.json وجعل "used": true و "device": "${currentDeviceId}" لهذا الكود.`);
-                alert(`تم تفعيل الكود بنجاح. تواصل مع المدرس لتأكيد التفعيل النهائي للكود.`);
+                // رسالة للمطور لتحديث codes.json، وللمستخدم للتواصل
+                console.warn(`تم تفعيل الكود: ${enteredCode}. يرجى تحديث ملف codes.json وجعل "used": true لهذا الكود وتعيين "device": "${DEVICE_ID}".`);
+                alert(`تم تفعيل الكود بنجاح. يرجى التواصل مع المدرس لتأكيد التفعيل النهائي للكود.`);
             }
         } else {
             errorElement.innerText = 'كود الدخول غير صحيح. حاول مرة أخرى.';
             errorElement.style.display = 'block';
         }
     }
-    
-    let checkIntervalId;
-    function startPeriodicCheck() {
-        if (checkIntervalId) clearInterval(checkIntervalId);
+    // نهاية منطق حماية الدخول
 
-        checkIntervalId = setInterval(async () => {
-            const storedCode = localStorage.getItem('userAccessCode');
-            if (!storedCode) {
-                logout();
-                return;
-            }
-
-            try {
-                const response = await fetch('codes.json');
-                if (!response.ok) {
-                    return; 
-                }
-                const latestCodes = await response.json();
-                const codeInfo = latestCodes[storedCode];
-
-                if (!codeInfo || codeInfo.used === false || codeInfo.device !== currentDeviceId) {
-                    logout('تم إلغاء تفعيل الكود أو استخدامه على جهاز آخر. يرجى التواصل مع المدرس.');
-                }
-            } catch (error) {
-                console.error('Error during periodic code check:', error);
-            }
-        }, 120000); 
-    }
-
-    function logout(message = 'انتهت صلاحية الجلسة أو تم تسجيل الخروج.') {
-        if (checkIntervalId) clearInterval(checkIntervalId);
-        localStorage.removeItem('userAccessCode');
-        alert(message);
-        window.location.reload(); 
-    }
-
+    // منع النقر بالزر الأيمن والتحديد
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('selectstart', e => e.preventDefault());
 
     // *** منطق تهيئة التطبيق المعدل ***
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       initializeTheme();
+      // إخفاء المحتوى وشاشة الدخول مؤقتاً
       document.getElementById('loginModal').style.display = 'none';
       document.getElementById('appContent').style.display = 'none';
-      document.body.style.overflow = 'hidden'; 
+      document.body.style.overflow = 'hidden'; // منع التمرير قبل الدخول
       
-      fetchCodes();
+      // تحميل ملف الأكواد
+      await loadAccessCodes();
+
+      // تحميل بيانات التطبيق
+      try {
+        const response = await fetch('data.json');
+        appData = await response.json();
+      } catch (e) {
+        console.error("Error loading app data:", e);
+        // عرض رسالة خطأ للمستخدم
+        document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('accessButton').disabled = true;
+        document.getElementById('accessError').innerText = 'خطأ في تحميل البيانات. يرجى المحاولة لاحقًا.';
+        document.getElementById('accessError').style.display = 'block';
+        return;
+      }
+      
+      const storedCode = localStorage.getItem('userAccessCode');
+      const codeData = accessCodes[storedCode];
+      
+      // التحقق من حالة الكود المخزن
+      if (storedCode && codeData && codeData.used === true && codeData.device === DEVICE_ID) {
+          loginSuccess(); // الدخول مباشرة إذا كان الكود مُفعل على هذا الجهاز
+          startPeriodicCheck();
+      } else {
+          // إظهار شاشة الدخول
+          document.getElementById('loginModal').style.display = 'flex';
+          document.getElementById('accessCodeInput').value = storedCode || '';
+          if (storedCode && codeData && codeData.used === true && codeData.device && codeData.device !== DEVICE_ID) {
+              document.getElementById('accessError').innerText = 'تم تفعيل الكود على جهاز آخر. تواصل مع المدرس.';
+              document.getElementById('accessError').style.display = 'block';
+          }
+      }
     });
   </script>
  </body>
