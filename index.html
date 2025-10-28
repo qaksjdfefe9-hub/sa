@@ -29,7 +29,7 @@
       --card-hover: #2a2a2a;
       --border-color: #333333;
       --shadow: 0 4px 20px rgba(0,0,0,0.3);
-      --shadow-hover: 0 8px 30px rgba(24,119,242,0.2); /* تم تعديل ظل الهوفر ليتناسب مع الأزرق */
+      --shadow-hover: 0 8px 30px rgba(24,119,242,0.2); 
 
       --gradient-primary: linear-gradient(135deg, #1877F2 0%, #3B90F5 100%);
       --gradient-card: linear-gradient(145deg, #1e1e1e 0%, #2a2a2a 100%);
@@ -48,7 +48,7 @@
       --card-hover: #f8f9fa;
       --border-color: #e9ecef;
       --shadow: 0 4px 20px rgba(0,0,0,0.1);
-      --shadow-hover: 0 8px 30px rgba(24,119,242,0.15); /* تم تعديل ظل الهوفر ليتناسب مع الأزرق */
+      --shadow-hover: 0 8px 30px rgba(24,119,242,0.15); 
 
       --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
       --gradient-bg: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
@@ -145,7 +145,7 @@
       font-weight: 800;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      text-shadow: 0 2px 4px rgba(24,119,242,0.3); /* تم تعديل ظل النص ليتناسب مع الأزرق */
+      text-shadow: 0 2px 4px rgba(24,119,242,0.3); 
       position: relative;
     }
 
@@ -245,7 +245,7 @@
     #searchInput:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(24,119,242,0.1); /* تم تعديل ظل التركيز ليتناسب مع الأزرق */
+      box-shadow: 0 0 0 3px rgba(24,119,242,0.1); 
       transform: translateY(-2px);
     }
 
@@ -282,6 +282,25 @@
       transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
+    
+    /* ===== [جديد] تنسيق عدّاد الطلاب ===== */
+    .student-counter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.2rem;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .student-counter i {
+      color: var(--primary); 
+    }
+    /* ===================================== */
 
     /* Teachers grid */
     .teachers-section {
@@ -353,7 +372,7 @@
       display: block;
       margin: 0 auto; /* تم تعديل الهامش لإزالة الهامش السفلي */
       transition: all 0.3s;
-      box-shadow: 0 8px 20px rgba(24,119,242,0.3); /* تم تعديل ظل الصورة ليتناسب مع الأزرق */
+      box-shadow: 0 8px 20px rgba(24,119,242,0.3); 
     }
 
     .teacher-card:hover .teacher-img {
@@ -404,7 +423,7 @@
       border-radius: 50%;
       border: 4px solid var(--primary);
       object-fit: cover;
-      box-shadow: 0 8px 20px rgba(24,119,242,0.3); /* تم تعديل ظل الصورة ليتناسب مع الأزرق */
+      box-shadow: 0 8px 20px rgba(24,119,242,0.3); 
     }
 
     .teacher-details h2 {
@@ -535,7 +554,7 @@
 
     .lecture-checkbox:hover {
       transform: scale(1.1);
-      box-shadow: 0 0 10px rgba(24,119,242,0.3); /* تم تعديل ظل الصندوق ليتناسب مع الأزرق */
+      box-shadow: 0 0 10px rgba(24,119,242,0.3); 
     }
 
     .lecture-title {
@@ -829,6 +848,13 @@
       .search-container {
         width: 100%;
       }
+      
+      /* ===== [جديد] تنسيق العدّاد للموبايل ===== */
+      .student-counter {
+         width: 100%;
+         justify-content: center;
+      }
+      /* ======================================= */
 
       .teachers-grid, .materials-grid, .exams-grid {
         grid-template-columns: 1fr;
@@ -900,10 +926,14 @@
       <input type="text" id="searchInput" placeholder="ابحث عن مدرس أو مادة...">
       <button id="searchButton"><i class="fas fa-search"></i> بحث</button>
      </div>
+     <div id="studentCounter" class="student-counter">
+      <i class="fas fa-users"></i>
+      <span>جارٍ التحميل...</span>
+     </div>
      <button id="themeToggle"><i class="fas fa-moon"></i></button>
      </header>
     <div id="homePage" class="page"> <div class="teachers-section">
-      <h2 class="section-title">اضغط على الصوره لدخول</h2>
+      <h2 class="section-title">اختر مدرسك المفضل</h2>
       <div class="teachers-grid" id="teachersGrid">
        <div class="loading">
         <div class="spinner"></div>
@@ -1069,6 +1099,35 @@
       const remainingSeconds = Math.floor(seconds % 60);
       return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
+
+    /* ===== [جديد] دالة عدّ الطلاب المفعلين ===== */
+    function updateStudentCounter(codes) {
+      try {
+        // جلب كل الأكواد (المفاتيح) من الملف
+        const allCodes = Object.keys(codes);
+        
+        // فلترة الأكواد للعثور فقط على التي حالتها "used" هي true
+        const activatedCodes = allCodes.filter(code => codes[code] && codes[code].used === true);
+        
+        // الحصول على العدد
+        const activatedCount = activatedCodes.length;
+        
+        // تحديث العنصر في الصفحة
+        const counterElement = document.querySelector('#studentCounter span');
+        if (counterElement) {
+          counterElement.textContent = `${activatedCount} طالب مفعل`;
+        }
+      } catch (e) {
+        console.error('Failed to update student counter:', e);
+        const counterElement = document.querySelector('#studentCounter span');
+        if (counterElement) {
+          // إخفاء العداد في حال حدوث خطأ
+          document.getElementById('studentCounter').style.display = 'none';
+        }
+      }
+    }
+    /* ========================================= */
+
 
     // إعداد مشغل الفيديو
     let hls;
@@ -1597,10 +1656,13 @@
     // دالة تحميل ملف الأكواد عند فتح الصفحة
     function loadAccessCodes() {
         const isLocalFile = window.location.protocol === 'file:';
+        const counterElement = document.getElementById('studentCounter'); // [جديد] جلب عنصر العداد
 
         if (isLocalFile) {
             console.warn('وضع التجربة المحلية مفعل. لن يتم تحميل ملف codes.json. استخدم الكود: DEMO');
-            // لا نحتاج لتحميل الملف، ننتقل مباشرة للتحقق من الدخول التلقائي
+            
+            if (counterElement) counterElement.style.display = 'none'; // [جديد] إخفاء العداد في الوضع المحلي
+            
             checkAutoLogin(); 
             return;
         }
@@ -1617,6 +1679,9 @@
             .then(data => {
                 accessCodeDatabase = data;
                 console.log('تم تحميل ملف الأكواد بنجاح.');
+                
+                updateStudentCounter(data); // <-- [جديد] استدعاء دالة العداد
+                
                 checkAutoLogin();
             })
             .catch(err => {
@@ -1625,6 +1690,8 @@
                 errorElement.innerText = 'خطأ: لا يمكن تحميل نظام الحماية. تأكد من رفع ملف codes.json بشكل صحيح.';
                 errorElement.style.display = 'block';
                 document.getElementById('loginModal').style.display = 'flex'; 
+                
+                if (counterElement) counterElement.style.display = 'none'; // [جديد] إخفاء العداد عند الخطأ
             });
     }
 
@@ -1669,6 +1736,10 @@
                 localStorage.setItem('userAccessCode', enteredCode); 
                 loginSuccess();
                 startPeriodicCheck(); // 🟢 بدء التحقق الدوري للطرد
+                
+                // [جديد] تحديث العداد فوراً عند الدخول بكود جديد
+                // (هذا سيزيد العداد بمقدار 1 مؤقتاً حتى يتم تحديث الملف)
+                updateStudentCounter(accessCodeDatabase); 
                 
                 console.warn(`تم تفعيل الكود: ${enteredCode}. يرجى تحديث ملف codes.json وجعل "used": true لهذا الكود.`);
                 alert(`تم تفعيل الكود بنجاح. تواصل مع المدرس لتأكيد التفعيل النهائي للكود.`);
