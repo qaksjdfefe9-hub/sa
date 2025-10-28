@@ -11,19 +11,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js"></script>
   <style>
     /*
-     * تم تعديل الألوان الأساسية (Primary) لتكون مشابهة للون فيسبوك الأزرق.
+     * الألوان الأساسية: أزرق فيسبوك
      */
     :root {
       --primary: #1877F2; /* أزرق فيسبوك */
-      --primary-dark: #0e64d2; /* أغمق قليلاً */
-      --primary-light: #4295f5; /* أفتح قليلاً */
+      --primary-dark: #0e64d2; 
+      --primary-light: #4295f5; 
       --secondary: #4caf50;
       --accent: #ff9800;
       --warning: #ff9800;
       --error: #f44336;
       --success: #8bc34a;
 
-      --plyr-color-main: #1877F2; /* أزرق */
+      --plyr-color-main: #1877F2; 
       --bg-color: #0a0a0a;
       --bg-secondary: #121212;
       --text-color: #ffffff;
@@ -32,9 +32,9 @@
       --card-hover: #2a2a2a;
       --border-color: #333333;
       --shadow: 0 4px 20px rgba(0,0,0,0.3);
-      --shadow-hover: 0 8px 30px rgba(24,119,242,0.2); /* تعديل ظل الهوفر */
+      --shadow-hover: 0 8px 30px rgba(24,119,242,0.2); 
 
-      --gradient-primary: linear-gradient(135deg, #1877F2 0%, #4295f5 100%); /* تدرج أزرق */
+      --gradient-primary: linear-gradient(135deg, #1877F2 0%, #4295f5 100%); 
       --gradient-card: linear-gradient(145deg, #1e1e1e 0%, #2a2a2a 100%);
       --gradient-bg: linear-gradient(180deg, #0a0a0a 0%, #121212 100%);
     }
@@ -51,7 +51,7 @@
       --card-hover: #f8f9fa;
       --border-color: #e9ecef;
       --shadow: 0 4px 20px rgba(0,0,0,0.1);
-      --shadow-hover: 0 8px 30px rgba(24,119,242,0.15); /* تعديل ظل الهوفر */
+      --shadow-hover: 0 8px 30px rgba(24,119,242,0.15); 
 
       --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
       --gradient-bg: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
@@ -121,11 +121,6 @@
       100% { transform: scale(1); }
     }
 
-    @keyframes shimmer {
-      0% { background-position: -200px 0; }
-      100% { background-position: calc(200px + 100%) 0; }
-    }
-
     /* Header styles */
     header {
       background: var(--gradient-card);
@@ -152,29 +147,6 @@
       position: relative;
     }
 
-    .site-title:hover {
-      transform: scale(1.05);
-      animation: pulse 2s infinite;
-    }
-
-    .site-title::before {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      right: -5px;
-      bottom: -5px;
-      background: var(--gradient-primary);
-      border-radius: 8px;
-      opacity: 0;
-      z-index: -1;
-      transition: opacity 0.3s;
-    }
-
-    .site-title:hover::before {
-      opacity: 0.1;
-    }
-
     .nav-buttons {
       display: flex;
       gap: 1rem;
@@ -198,25 +170,9 @@
       overflow: hidden;
     }
 
-    .nav-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: var(--gradient-primary);
-      transition: left 0.3s;
-      z-index: -1;
-    }
-
     .nav-btn:hover {
       color: white;
       transform: translateY(-2px);
-    }
-
-    .nav-btn:hover::before {
-      left: 0;
     }
 
     .nav-btn.active {
@@ -245,14 +201,7 @@
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    #searchInput:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(24,119,242,0.1);
-      transform: translateY(-2px);
-    }
-
-    #searchButton, #themeToggle {
+    #searchButton, #themeToggle, .copy-button {
       background: var(--gradient-primary);
       color: white;
       border: none;
@@ -281,7 +230,7 @@
       justify-content: center;
     }
 
-    #searchButton:hover, #themeToggle:hover {
+    #searchButton:hover, #themeToggle:hover, .copy-button:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
@@ -318,7 +267,6 @@
       border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
-      /* تنسيق توسيط الصورة فقط */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -326,25 +274,9 @@
       min-height: 250px;
     }
 
-    .teacher-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-
     .teacher-card:hover {
       transform: translateY(-10px) scale(1.02);
       box-shadow: var(--shadow-hover);
-    }
-
-    .teacher-card:hover::before {
-      transform: scaleX(1);
     }
 
     .teacher-img {
@@ -354,7 +286,7 @@
       object-fit: cover;
       border: 4px solid var(--primary);
       display: block;
-      margin: 0 auto; /* تم تعديل الهامش لإزالة الهامش السفلي */
+      margin: 0 auto; 
       transition: all 0.3s;
       box-shadow: 0 8px 20px rgba(24,119,242,0.3);
     }
@@ -364,26 +296,11 @@
       border-color: var(--primary-light);
     }
 
-    /* إخفاء الاسم والموضوع - التعديل المطلوب */
     .teacher-card .teacher-name,
     .teacher-card .teacher-subject {
       display: none !important;
     }
     
-    .teacher-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      color: var(--text-color);
-    }
-
-    .teacher-subject {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-    }
-
     /* Classes page */
     .classes-page {
       display: grid;
@@ -410,17 +327,7 @@
       box-shadow: 0 8px 20px rgba(24,119,242,0.3);
     }
 
-    .teacher-details h2 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .teacher-details p {
-      font-size: 1.2rem;
-      color: var(--text-secondary);
-    }
-
-    .back-button, .copy-button {
+    .back-button {
       background: var(--gradient-primary);
       color: white;
       border: none;
@@ -436,128 +343,23 @@
       box-shadow: var(--shadow);
     }
 
-    .back-button:hover, .copy-button:hover {
+    .back-button:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-hover);
     }
 
-    .classes-list {
-      display: grid;
-      gap: 2rem;
-    }
-
-    .class-card {
-      background: var(--gradient-card);
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border-color);
-      transition: all 0.3s;
-    }
-
-    .class-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .class-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      border-right: 4px solid var(--primary);
-      cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-    }
-
-    .class-header:hover {
-      background: var(--card-hover);
-    }
-
-    .class-header h3 {
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
-
-    .class-header span {
-      font-size: 1.2rem;
-      transition: transform 0.3s;
-    }
-
-    .lectures-list {
-      display: none;
-      gap: 1rem;
-      padding: 0 2rem 2rem;
-    }
-
-    .lecture-item {
-      position: relative;
-      padding: 1.2rem 1.5rem 1.2rem 3rem;
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      border-right: 3px solid var(--primary);
-      cursor: pointer;
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .lecture-item:hover {
-      background: var(--card-hover);
-      transform: translateX(10px);
-      box-shadow: var(--shadow);
-    }
-
-    .lecture-content {
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .lecture-checkbox {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--primary);
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      background: transparent;
-      flex-shrink: 0;
-    }
-
-    .lecture-checkbox.completed {
-      background: var(--primary);
-      color: white;
-    }
-
-    .lecture-checkbox:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 10px rgba(24,119,242,0.3);
-    }
-
-    .lecture-title {
-      flex-grow: 1;
-    }
-
-    .lecture-progress {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-right: 1rem;
-    }
-    
-    /* ===== NEW: Video page Layout & Playlist ===== */
+    /* ===== Video page Layout & Playlist ===== */
     .video-content-grid {
       display: grid;
       grid-template-columns: 3fr 1fr; /* 3/4 video, 1/4 playlist */
       gap: 2rem;
+      transition: grid-template-columns 0.4s ease-in-out;
     }
     
+    .video-content-grid.playlist-hidden {
+        grid-template-columns: 1fr; /* 100% video when playlist is hidden */
+    }
+
     .main-video-column {
       display: flex;
       flex-direction: column;
@@ -585,33 +387,45 @@
       border: 1px solid var(--border-color);
     }
 
-    .video-details h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .video-details p {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-    
     .playlist-container {
       background: var(--gradient-card);
       padding: 1.5rem;
       border-radius: 15px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
-      overflow-y: auto; /* Enable scrolling for the playlist */
-      max-height: calc(100vh - 100px); /* Adjust based on header height, for better UX */
+      overflow-y: auto; 
+      max-height: calc(100vh - 100px); 
+      transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
     }
     
-    .playlist-container h3 {
+    .playlist-container.hidden {
+        display: none; /* إخفاء العنصر بالكامل عند إيقاف التشغيل */
+    }
+    
+    .playlist-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         color: var(--primary);
         font-size: 1.5rem;
         margin-bottom: 1rem;
         border-bottom: 2px solid var(--border-color);
         padding-bottom: 0.5rem;
+    }
+
+    #togglePlaylistBtn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+
+    #togglePlaylistBtn:hover {
+        background: var(--primary-dark);
     }
 
     .playlist-item {
@@ -639,7 +453,6 @@
         color: white;
         font-weight: 600;
         box-shadow: var(--shadow-hover);
-        animation: pulse 0.5s ease-in-out 2;
     }
 
     /* ===== تنسيق العلامة المائية ===== */
@@ -654,10 +467,9 @@
       justify-content: center;
       font-size: 1.5rem;
       font-weight: bold;
-      color: rgba(255, 255, 255, 0.2); /* لون رمادي شفاف */
-      pointer-events: none; /* هذا السطر مهم جداً ليسمح بالضغط على الفيديو */
+      color: rgba(255, 255, 255, 0.2); 
+      pointer-events: none; 
       z-index: 10;
-      /* لمنع النسخ */
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -665,201 +477,9 @@
     }
     /* ============================================= */
 
-    /* Materials and Exams */
-    .materials-grid, .exams-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 2rem;
-      padding: 2rem 0;
-    }
-
-    .material-card, .exam-card {
-      background: var(--gradient-card);
-      padding: 2rem;
-      border-radius: 20px;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border: 1px solid var(--border-color);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .material-card::before, .exam-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: var(--gradient-primary);
-      transform: scaleX(0);
-      transition: transform 0.3s;
-    }
-
-    .material-card:hover, .exam-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .material-card:hover::before, .exam-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .material-img, .exam-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s;
-    }
-
-    .material-card:hover .material-img, .exam-card:hover .exam-img {
-      transform: scale(1.05);
-    }
-
-    .material-title, .exam-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-    }
-
-    .material-subject, .exam-subject {
-      color: var(--primary);
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .download-btn {
-      display: block;
-      width: 100%;
-      background: var(--gradient-primary);
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      border-radius: 12px;
-      text-decoration: none;
-      transition: all 0.3s;
-      font-weight: 600;
-      box-shadow: var(--shadow);
-    }
-
-    .download-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    /* Modal */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 200;
-      animation: fadeIn 0.3s;
-    }
-
-    .modal-content {
-      background: var(--gradient-card);
-      padding: 2rem;
-      border-radius: 20px;
-      text-align: center;
-      position: relative;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: var(--shadow-hover);
-      animation: slideUp 0.3s;
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .modal-content img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      border: 3px solid var(--primary);
-    }
-
-    .modal-content a {
-      display: inline-block;
-      background: var(--gradient-primary);
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      text-decoration: none;
-      margin: 1rem 0.5rem;
-      transition: all 0.3s;
-      font-weight: 600;
-    }
-
-    .modal-content a:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      background: transparent;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text-color);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .close-modal:hover {
-      background: var(--error);
-      color: white;
-    }
-
-    /* Loading states */
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 3rem;
-    }
-
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid var(--border-color);
-      border-top: 4px solid var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
     /* Responsive design */
     @media (max-width: 1024px) {
-        .video-content-grid {
+        .video-content-grid, .video-content-grid.playlist-hidden {
             grid-template-columns: 1fr; /* Stack on smaller screens */
         }
         .playlist-container {
@@ -873,69 +493,13 @@
         padding: 1rem;
         gap: 1rem;
       }
-
-      .site-title {
-        font-size: 1.5rem;
-      }
-
       .nav-buttons {
         width: 100%;
         justify-content: center;
         margin: 0;
       }
-
-      .nav-btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-      }
-
       .search-container {
         width: 100%;
-      }
-
-      .teachers-grid, .materials-grid, .exams-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .teacher-info {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .teacher-img, .teacher-img-lg {
-        width: 120px;
-        height: 120px;
-      }
-
-      .page {
-        padding: 1rem;
-      }
-
-      .section-title {
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .site-title {
-        font-size: 1.2rem;
-      }
-
-      .nav-btn {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-      }
-
-      #searchInput {
-        padding: 0.8rem 1rem;
-      }
-
-      .teacher-card, .material-card, .exam-card {
-        padding: 1.5rem;
-      }
-
-      .section-title {
-        font-size: 1.5rem;
       }
     }
   </style>
@@ -968,7 +532,7 @@
 
     <div id="homePage" class="page">
      <div class="teachers-section">
-      <h2 class="section-title">اختر مدرسك المفضل</h2>
+      <h2 class="section-title">اضغط على الصوره لدخول</h2>
       <div class="teachers-grid" id="teachersGrid">
        <div class="loading">
         <div class="spinner"></div>
@@ -992,7 +556,8 @@
     </div>
 
     <div id="videoPage" class="page">
-     <div class="video-content-grid"> <div class="main-video-column">
+     <div id="videoContentGrid" class="video-content-grid"> 
+        <div class="main-video-column">
             <div class="video-container">
                 <video id="player" playsinline controls></video>
                 <div id="videoWatermark" class="video-watermark"></div>
@@ -1005,7 +570,11 @@
             </div>
         </div>
         
-        <div class="playlist-container" id="playlistContainer"> <h3>قائمة محاضرات الفصل:</h3>
+        <div class="playlist-container" id="playlistContainer"> 
+            <div class="playlist-header">
+                <h3>قائمة محاضرات الفصل:</h3>
+                <button id="togglePlaylistBtn" onclick="togglePlaylist()"><i class="fas fa-eye-slash"></i> إخفاء</button>
+            </div>
             <div id="playlistList">
                 <div class="loading">
                     <div class="spinner"></div>
@@ -1061,21 +630,17 @@
             const sizeCheck = window.outerWidth - window.innerWidth > 100 || window.outerHeight - window.innerHeight > 100;
             const start = performance.now();
             try {
-                // محاولة إيقاف التنفيذ باستخدام الـ debugger
                 new Function('debugger')();
             } catch (e) {}
             const end = performance.now();
-            // Check if devtools are open by checking window size difference or performance delay
             if (sizeCheck || (end - start) > threshold) {
                 if (!devtoolsOpen) {
                     devtoolsOpen = true;
                     document.body.innerHTML = '<div style="background: black; color: red; font-size: 2rem; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999;"><h1>! خطأ !</h1><p style="font-size: 1.2rem;">تم اكتشاف محاولة الوصول غير المصرح بها (DevTools).</p><p style="font-size: 1.2rem;">يرجى إغلاق أدوات المطورين.</p></div>';
-                    // محاولة إيقاف التنفيذ بشكل متكرر
                     const preventExecution = setInterval(() => {
                         try {
                             new Function('debugger')();
                         } catch (e) {
-                            // إذا تم إغلاق الأدوات، سيتم إيقاف الإنترڤال
                             if (!window.outerWidth) clearInterval(preventExecution);
                         }
                     }, 100);
@@ -1110,6 +675,15 @@
         const icon = document.querySelector('#themeToggle i');
         icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     }
+    
+    // تبديل الثيم
+    document.getElementById('themeToggle').addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
 
     // إدارة حفظ تقدم المستخدم وموضع الفيديو
     let completedLectures = JSON.parse(localStorage.getItem('completedLectures') || '{}');
@@ -1132,7 +706,6 @@
         completedLectures[url] = completed;
         saveCompleted();
         if (currentTeacher) renderClasses(currentTeacher.classes);
-        // تحديث قائمة التشغيل في حال كانت صفحة الفيديو مفتوحة
         if (pages.video.classList.contains('active') && currentTeacher) {
             const currentClass = currentTeacher.classes[currentClassIndex];
             renderPlaylist(currentClass.lectures, currentLectureIndex, currentTeacher.id, currentClassIndex);
@@ -1143,12 +716,6 @@
         event.stopPropagation();
         const isCompleted = completedLectures[url];
         markLectureCompleted(url, !isCompleted);
-    }
-
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
     // إعداد مشغل الفيديو
@@ -1194,38 +761,11 @@
     const searchButton = document.getElementById('searchButton');
     const navButtons = document.querySelectorAll('.nav-btn');
 
-    // **بيانات المدرس الوحيد: حيدر الطائي - اللغة الإنجليزية**
-    let teachers = [
-        {
-            "id": 1,
-            "name": "حيدر الطائي",
-            "subject": "مادة اللغة الإنجليزية",
-            "image": "https://cdn.glitch.global/d472cc04-f40d-483a-8a7d-67c6c1ddaaff/english-teacher.jpg?v=1710000000000", // صورة افتراضية
-            "classes": [
-                {
-                    "name": "الوحدة الأولى",
-                    "lectures": [
-                        { "title": "المحاضرة 1: الأزمنة", "url": "https://drive.google.com/file/d/1MBTn9R3-emYWTRnjJ5mqpeDcmCKnaLCQ/view?usp=drivesdk", "description": "شرح مفصل للأزمنة في اللغة الإنجليزية." },
-                        { "title": "المحاضرة 2: المبني للمجهول", "url": "https://example.com/video2.m3u8", "description": "قواعد المبني للمجهول وتمارين تطبيقية." }
-                    ]
-                },
-                {
-                    "name": "الوحدة الثانية",
-                    "lectures": [
-                        { "title": "المحاضرة 3: جمل الوصل", "url": "https://example.com/video3.m3u8", "description": "شرح جمل الوصل المعرفة وغير المعرفة." },
-                        { "title": "المحاضرة 4: القطعة الخارجية", "url": "https://example.com/video4.m3u8", "description": "تقنيات التعامل مع القطعة الخارجية في الامتحان الوزاري." },
-                        { "title": "المحاضرة 5: النفي الضمني والصريح", "url": "https://youtu.be/QJQSDjCucu8?si=oIyCNJq6E3LdMryk", "description": "شرح شامل ومفصل لجميع أدوات النفي وقواعدها." }
-                    ]
-                }
-            ]
-        }
-    ], currentTeacher = null, currentClassIndex = 0, currentLectureIndex = 0, currentLectureLink = '';
-    
+    let teachers = [], currentTeacher = null, currentClassIndex = 0, currentLectureIndex = 0, currentLectureLink = '';
     let materials = [], exams = [];
 
     // دالة التنقل
     function navigate(page, data = null) {
-        // إيقاف حفظ التقدم عند مغادرة صفحة الفيديو
         if (progressSaveInterval) {
             clearInterval(progressSaveInterval);
             progressSaveInterval = null;
@@ -1234,7 +774,6 @@
         Object.values(pages).forEach(p => p.classList.remove('active'));
         pages[page].classList.add('active');
 
-        // تحديث زر التنقل النشط
         navButtons.forEach(btn => btn.classList.remove('active'));
         if (page === 'home' || page === 'classes' || page === 'video') {
             document.querySelector('.nav-btn:nth-child(1)').classList.add('active');
@@ -1248,7 +787,7 @@
 
         if (page === 'classes' && data) {
             currentTeacher = data.teacher;
-            currentClassIndex = data.classIndex; // قد نحتاجه لاحقًا
+            currentClassIndex = data.classIndex; 
             renderTeacherClasses(currentTeacher);
         }
     }
@@ -1276,7 +815,6 @@
         teacherList.forEach(teacher => {
             const card = document.createElement('div');
             card.className = 'teacher-card';
-            // النقر على الكارت يذهب لصفحة الفصول. نمرر 0 كـ classIndex افتراضي.
             card.setAttribute('onclick', `Maps('classes', { teacher: teachers.find(t => t.id === ${teacher.id}), classIndex: 0 })`);
             card.innerHTML = `
                 <img src="${teacher.image}" class="teacher-img" alt="صورة المدرس">
@@ -1300,8 +838,7 @@
             classCard.className = 'class-card';
 
             const lecturesCompleted = classItem.lectures.filter(lec => completedLectures[lec.url]).length;
-            const progressPercentage = (lecturesCompleted / classItem.lectures.length) * 100;
-
+            
             classCard.innerHTML = `
                 <div class="class-header" onclick="toggleLectures(this)">
                     <h3>${classItem.name}</h3>
@@ -1340,12 +877,12 @@
         }
     }
 
-    // دالة عرض قائمة التشغيل (NEW FUNCTION)
+    // دالة عرض قائمة التشغيل
     function renderPlaylist(lectures, currentLectureIndex, teacherId, classIndex) {
         const playlistList = document.getElementById('playlistList');
         if (!playlistList) return;
 
-        playlistList.innerHTML = ''; // Clear previous playlist
+        playlistList.innerHTML = ''; 
 
         lectures.forEach((lecture, index) => {
             const isCompleted = completedLectures[lecture.url] || false;
@@ -1353,7 +890,6 @@
 
             const listItem = document.createElement('div');
             listItem.className = `playlist-item ${isActive ? 'active-lecture' : ''}`;
-            // عند النقر على عنصر في القائمة، يتم تشغيل المحاضرة الجديدة
             listItem.setAttribute('onclick', `openVideo(${teacherId}, ${classIndex}, ${index})`);
 
             let statusIcon = '';
@@ -1373,8 +909,31 @@
         });
     }
 
+    // دالة التحكم في إظهار وإخفاء قائمة التشغيل (NEW)
+    function togglePlaylist() {
+        const grid = document.getElementById('videoContentGrid');
+        const playlist = document.getElementById('playlistContainer');
+        const button = document.getElementById('togglePlaylistBtn');
+        const icon = button.querySelector('i');
 
-    // فتح صفحة الفيديو
+        if (grid.classList.contains('playlist-hidden')) {
+            // إظهار قائمة التشغيل
+            grid.classList.remove('playlist-hidden');
+            playlist.classList.remove('hidden');
+            icon.className = 'fas fa-eye-slash';
+            button.innerHTML = '<i class="fas fa-eye-slash"></i> إخفاء';
+        } else {
+            // إخفاء قائمة التشغيل
+            grid.classList.add('playlist-hidden');
+            playlist.classList.add('hidden');
+            icon.className = 'fas fa-eye';
+            button.innerHTML = '<i class="fas fa-eye"></i> إظهار';
+        }
+        // إعادة تحميل المشغل لضمان تعديل حجمه إذا كان في وضع الشاشة الكاملة
+        player.fullscreen.exit(); 
+    }
+
+    // فتح صفحة الفيديو (تم تحسينها للتعامل مع أي رابط)
     function openVideo(teacherId, classIndex, lectureIndex) {
         const teacher = teachers.find(t => t.id === teacherId);
         if (!teacher) return;
@@ -1383,7 +942,6 @@
         const lecture = currentClass.lectures[lectureIndex];
         if (!lecture) return;
 
-        // تحديث المتغيرات العامة للمحاضرة الحالية
         currentTeacher = teacher;
         currentClassIndex = classIndex;
         currentLectureIndex = lectureIndex;
@@ -1392,100 +950,85 @@
         document.getElementById('videoTitle').textContent = lecture.title;
         document.getElementById('videoDescription').textContent = lecture.description;
         
-        // **NEW: Render Playlist**
         renderPlaylist(currentClass.lectures, lectureIndex, teacherId, classIndex);
 
-        if (Hls.isSupported() && lecture.url.includes('.m3u8')) {
+        if (hls) hls.destroy();
+        hls = null;
+        player.stop(); 
+
+        const videoElement = document.getElementById('player');
+        videoElement.src = ''; 
+        videoElement.poster = ''; 
+        
+        // **NEW: تحديد نوع الرابط بمرونة**
+        const url = lecture.url;
+        const isHls = Hls.isSupported() && url.includes('.m3u8');
+        const isYouTube = url.includes('youtu.be') || url.includes('youtube.com');
+        const isDirectVideo = url.includes('.mp4') || url.includes('.webm') || url.includes('.mov');
+
+        if (isHls) {
             // HLS stream
-            if (hls) hls.destroy();
             hls = new Hls();
-            hls.loadSource(lecture.url);
-            hls.attachMedia(document.getElementById('player'));
+            hls.loadSource(url);
+            hls.attachMedia(videoElement);
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                // استئناف التشغيل من آخر نقطة
-                player.currentTime = getVideoProgress(lecture.url);
+                player.currentTime = getVideoProgress(url);
                 player.play();
             });
-        } else if (lecture.url.includes('drive.google.com') || lecture.url.includes('youtu.be') || lecture.url.includes('youtube.com')) {
-            // Google Drive or YouTube link
-            if (hls) hls.destroy();
-            hls = null;
-            const videoElement = document.getElementById('player');
-            videoElement.src = ''; // مسح المصدر القديم
-
-            // استخدام رابط iframe لـ YouTube أو Google Drive في حال لم يكن HLS
-            let embedUrl = lecture.url;
-            if (lecture.url.includes('youtu.be')) {
-                const videoId = lecture.url.split('/').pop().split('?')[0];
-                embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
-            } else if (lecture.url.includes('youtube.com')) {
-                const urlParams = new URLSearchParams(new URL(lecture.url).search);
-                const videoId = urlParams.get('v');
-                if (videoId) {
-                    embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
-                }
-            } else if (lecture.url.includes('drive.google.com')) {
-                // محاولة استخلاص ID ملف Drive
-                const driveIdMatch = lecture.url.match(/d\/([a-zA-Z0-9_-]+)/);
-                if (driveIdMatch && driveIdMatch[1]) {
-                     // هذا الرابط لن يعمل مباشرة في مشغل Plyr لأنه ملف فيديو وليس رابط M3U8 مباشر أو iframe.
-                     // لأغراض التشغيل: سنستخدم رابط فيديو تجريبي إذا لم يكن HLS.
-                     embedUrl = 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4';
-                     // ملاحظة: قد تحتاج لاستبدال هذا برابط فيديو مباشر قابل للتشغيل في مشغل Plyr
-                }
+        } else if (isYouTube) {
+            // YouTube link
+            let videoId;
+            if (url.includes('youtu.be')) {
+                videoId = url.split('/').pop().split('?')[0];
+            } else if (url.includes('youtube.com')) {
+                const urlParams = new URLSearchParams(new URL(url).search);
+                videoId = urlParams.get('v');
             }
 
-            videoElement.poster = ''; // إزالة البوستر
-
-            // إذا كان رابط يوتيوب، استخدم iframe وإلا حاول تشغيل كمصدر مباشر
-            if (embedUrl.includes('youtube-nocookie.com/embed/')) {
+            if (videoId) {
                 player.source = {
                     type: 'video',
                     sources: [{
-                        src: embedUrl,
+                        src: videoId,
                         provider: 'youtube',
                     }],
                 };
             } else {
-                player.source = {
-                    type: 'video',
-                    sources: [{
-                        src: embedUrl,
-                        type: embedUrl.includes('.mp4') ? 'video/mp4' : 'video/webm', // تخمين نوع الملف
-                    }],
-                };
+                console.error('Invalid YouTube URL:', url);
+                alert('عذراً، رابط يوتيوب غير صحيح.');
+                return;
             }
-            
-            // استئناف التشغيل من آخر نقطة
-            player.once('canplay', () => {
-                 player.currentTime = getVideoProgress(lecture.url);
-            });
-            
-            // إظهار العلامة المائية
-            document.getElementById('videoWatermark').textContent = `منصة التفوقQM - ${teacher.name}`;
 
-
-        } else if (lecture.url.includes('.mp4') || lecture.url.includes('.webm')) {
-             // ملف فيديو مباشر
-            if (hls) hls.destroy();
-            hls = null;
+        } else if (isDirectVideo) {
+             // ملف فيديو مباشر (MP4, WebM, MOV)
             player.source = {
                 type: 'video',
                 sources: [{
-                    src: lecture.url,
-                    type: lecture.url.includes('.mp4') ? 'video/mp4' : 'video/webm',
+                    src: url,
+                    type: isDirectVideo.includes('.mp4') ? 'video/mp4' : isDirectVideo.includes('.webm') ? 'video/webm' : 'video/mov', // تخمين النوع
                 }],
             };
-            // استئناف التشغيل من آخر نقطة
             player.once('canplay', () => {
-                 player.currentTime = getVideoProgress(lecture.url);
+                 player.currentTime = getVideoProgress(url);
             });
 
         } else {
-            console.error('Unsupported video format or link:', lecture.url);
-            alert('صيغة الفيديو غير مدعومة أو الرابط غير صحيح.');
-            return;
+            // إذا لم يكن أي من الأنواع المعروفة، يمكن محاولة تشغيله كـ MP4 افتراضياً
+            console.warn('URL type unknown, attempting to play as direct video:', url);
+            player.source = {
+                type: 'video',
+                sources: [{
+                    src: url,
+                    type: 'video/mp4',
+                }],
+            };
+            player.once('canplay', () => {
+                 player.currentTime = getVideoProgress(url);
+            });
         }
+
+        // إظهار العلامة المائية
+        document.getElementById('videoWatermark').textContent = `منصة التفوقQM - ${teacher.name}`;
 
         navigate('video');
     }
@@ -1502,7 +1045,7 @@
         }
     }
 
-    // ... (بقية دوال الملازم والامتحانات لم يتم تغييرها)
+    // دوال الملازم والامتحانات (بدون تغيير)
 
     function renderMaterials(materialList) {
         materialsGrid.innerHTML = '';
@@ -1542,11 +1085,13 @@
         });
     }
 
-    // *** منطق حماية الدخول ***
+
+    // منطق حماية الدخول (بدون تغيير)
     let codesData = {};
     let accessCodeValid = false;
+    let currentDeviceId = localStorage.getItem('deviceId') || `device-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('deviceId', currentDeviceId);
 
-    // دالة لجلب البيانات من ملف codes.json
     async function fetchCodes() {
         try {
             const response = await fetch('codes.json');
@@ -1554,18 +1099,14 @@
                 throw new Error('Failed to load codes.json');
             }
             codesData = await response.json();
-            console.log('Codes data loaded successfully.');
-            // بعد تحميل الأكواد، نبدأ منطق التحقق من الدخول
             checkUserLogin();
         } catch (error) {
             console.error('Error fetching codes data:', error);
-            // في حال فشل التحميل، نمنع الدخول ونعرض رسالة خطأ
             document.getElementById('accessError').innerText = 'حدث خطأ في تحميل بيانات الأكواد. يرجى تحديث الصفحة.';
             document.getElementById('loginModal').style.display = 'flex';
         }
     }
     
-    // دالة لجلب البيانات من ملف data.json
     async function fetchData() {
         try {
             const response = await fetch('data.json');
@@ -1577,7 +1118,6 @@
             materials = data.materials || [];
             exams = data.exams || [];
             renderTeachers(teachers);
-            console.log('App data loaded successfully.');
         } catch (error) {
             console.error('Error fetching app data:', error);
             teachersGrid.innerHTML = '<p style="text-align: center; color: var(--error); font-size: 1.2rem;">فشل في تحميل بيانات المدرسين والمحتوى.</p>';
@@ -1589,8 +1129,8 @@
         accessCodeValid = true;
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('appContent').style.display = 'block';
-        document.body.style.overflow = 'auto'; // السماح بالتمرير
-        fetchData(); // تحميل بيانات المحتوى بعد الدخول
+        document.body.style.overflow = 'auto'; 
+        fetchData(); 
         navigate('home');
     }
 
@@ -1602,19 +1142,13 @@
 
     function checkUserLogin() {
         const storedCode = localStorage.getItem('userAccessCode');
-        if (storedCode && codesData[storedCode] && codesData[storedCode].used === true && codesData[storedCode].device) {
-            // الكود موجود، مفعل، ومربوط بجهاز (نفترض أنه جهاز المستخدم الحالي)
+        if (storedCode && codesData[storedCode] && codesData[storedCode].used === true && codesData[storedCode].device === currentDeviceId) {
             loginSuccess();
-            startPeriodicCheck(); // 🟢 بدء التحقق الدوري للطرد
+            startPeriodicCheck(); 
         } else {
-            // الكود غير موجود أو غير مفعل أو غير مربوط بجهاز
             showLoginModal();
         }
     }
-
-    // متغير لتخزين ID الجهاز المستخدم (مثال بسيط)
-    let currentDeviceId = localStorage.getItem('deviceId') || `device-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem('deviceId', currentDeviceId);
 
     function checkAccessCode() {
         const enteredCode = document.getElementById('accessCodeInput').value.toUpperCase().trim();
@@ -1632,26 +1166,20 @@
         if (codeInfo) {
             if (codeInfo.used === true) {
                 if (codeInfo.device === currentDeviceId) {
-                    // الكود مفعل وعلى نفس الجهاز
                     localStorage.setItem('userAccessCode', enteredCode);
                     loginSuccess();
-                    startPeriodicCheck(); // 🟢 بدء التحقق الدوري للطرد
+                    startPeriodicCheck(); 
                 } else {
-                    // الكود مفعل وعلى جهاز آخر
                     errorElement.innerText = 'هذا الكود مستخدم بالفعل على جهاز آخر. يرجى التواصل مع المدرس.';
                     errorElement.style.display = 'block';
                 }
             } else if (codeInfo.used === false) {
-                // الكود غير مفعل، نقوم بتفعيله محلياً
-                // ملاحظة هامة: في بيئة إنتاج حقيقية، يجب أن يتم هذا عبر خادم
-                // لتحديث ملف codes.json الفعلي وربط الكود بالجهاز
-                // هنا نقوم بتحديث الحالة محليًا، مع تنبيه المبرمج/المدرس
-                codeInfo.used = true; // نعتبره مفعّل الآن محلياً
-                codeInfo.device = currentDeviceId; // نربطه بالجهاز محلياً
+                codeInfo.used = true; 
+                codeInfo.device = currentDeviceId; 
 
                 localStorage.setItem('userAccessCode', enteredCode);
                 loginSuccess();
-                startPeriodicCheck(); // 🟢 بدء التحقق الدوري للطرد
+                startPeriodicCheck(); 
                 
                 console.warn(`تم تفعيل الكود: ${enteredCode}. يرجى تحديث ملف codes.json وجعل "used": true و "device": "${currentDeviceId}" لهذا الكود.`);
                 alert(`تم تفعيل الكود بنجاح. تواصل مع المدرس لتأكيد التفعيل النهائي للكود.`);
@@ -1662,7 +1190,6 @@
         }
     }
     
-    // دالة التحقق الدوري للطرد (Periodic Check for Kick-out)
     let checkIntervalId;
     function startPeriodicCheck() {
         if (checkIntervalId) clearInterval(checkIntervalId);
@@ -1675,49 +1202,39 @@
             }
 
             try {
-                // إعادة جلب ملف الأكواد للتأكد من الحالة المحدثة للكود
                 const response = await fetch('codes.json');
                 if (!response.ok) {
-                     // في حالة فشل التحميل، نعتبر أن المستخدم لا يزال مسجلاً للدخول مؤقتاً
-                    console.error('Failed to fetch latest codes.json for check. Continuing session.');
                     return; 
                 }
                 const latestCodes = await response.json();
                 const codeInfo = latestCodes[storedCode];
 
                 if (!codeInfo || codeInfo.used === false || codeInfo.device !== currentDeviceId) {
-                    // إذا لم يعد الكود موجوداً، أو تم إلغاء تفعيله، أو تم ربطه بجهاز آخر (الطرد)
                     logout('تم إلغاء تفعيل الكود أو استخدامه على جهاز آخر. يرجى التواصل مع المدرس.');
                 }
             } catch (error) {
                 console.error('Error during periodic code check:', error);
-                // لا نفعل شيئاً في حالة الخطأ للحفاظ على تجربة المستخدم
             }
-        }, 120000); // التحقق كل دقيقتين (120000 مللي ثانية)
+        }, 120000); 
     }
 
     function logout(message = 'انتهت صلاحية الجلسة أو تم تسجيل الخروج.') {
         if (checkIntervalId) clearInterval(checkIntervalId);
         localStorage.removeItem('userAccessCode');
         alert(message);
-        window.location.reload(); // إعادة تحميل الصفحة لفرض شاشة الدخول
+        window.location.reload(); 
     }
 
-    // نهاية منطق حماية الدخول
-
-    // منع النقر بالزر الأيمن والتحديد
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('selectstart', e => e.preventDefault());
 
     // *** منطق تهيئة التطبيق المعدل ***
     document.addEventListener('DOMContentLoaded', () => {
       initializeTheme();
-      // إخفاء المحتوى وشاشة الدخول مؤقتاً
       document.getElementById('loginModal').style.display = 'none';
       document.getElementById('appContent').style.display = 'none';
-      document.body.style.overflow = 'hidden'; // منع التمرير قبل الدخول
+      document.body.style.overflow = 'hidden'; 
       
-      // تحميل ملف الأكواد، وهو الذي سيقرر إظهار شاشة الدخول أو بدء الجلسة
       fetchCodes();
     });
   </script>
